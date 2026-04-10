@@ -124,7 +124,7 @@
 
 | 任务名称 | 当前状态 | 修改文件 | 完成agentId | 完成时间 | 提交commit前8位 | 备注 |
 |---------|---------|---------|------------|---------|----------------|------|
-| 3.3.1 完善main.go入口文件 | ⬜ 待开始 | - | tuhome-backend-architect | - | - | 整合所有路由和中间件 |
+| 3.3.1 完善main.go入口文件 | ✅ 完成 | main.go, internal/cmd/cmd.go | tuhome-orchestrator:subagent:fe48808f | 2026-04-10 21:38 | c9f5011 | 整合所有路由和中间件，添加CORS和响应拦截中间件 |
 
 ### 3.4 前端-Comment API服务层
 
