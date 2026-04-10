@@ -8,6 +8,7 @@ import (
 
 	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/gtime"
 )
 
 // Post is the DAO for posts table
@@ -44,6 +45,19 @@ func (p *Post) Insert(ctx context.Context, req *do.PostCreateReq) (uint64, error
 	}
 
 	return uint64(id), nil
+}
+
+// Delete soft-deletes a post by setting IsDeleted=1 and DeletedAt.
+// It uses soft-delete pattern based on the IsDeleted field.
+func (p *Post) Delete(ctx context.Context, req *do.PostDeleteReq) error {
+	_, err := p.db().Model(p.table).
+		Where("id", req.Id).
+		Data(g.Map{
+			"is_deleted": 1,
+			"deleted_at":  gtime.Now(),
+		}).
+		Update()
+	return err
 }
 
 // db returns the underlying database model for further operations
