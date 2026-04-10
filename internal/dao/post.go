@@ -49,9 +49,10 @@ func (p *Post) Insert(ctx context.Context, req *do.PostCreateReq) (uint64, error
 
 // GetOne queries a single post record by ID.
 // It returns the post entity or nil if not found.
+// Only returns non-deleted posts (is_deleted=0).
 func (p *Post) GetOne(ctx context.Context, id uint64) (*entity.Post, error) {
 	var post *entity.Post
-	err := p.db().Where("id", id).Scan(&post)
+	err := p.db().Where("id", id).Where("is_deleted", 0).Scan(&post)
 	if err != nil {
 		return nil, err
 	}
