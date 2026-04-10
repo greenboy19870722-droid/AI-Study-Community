@@ -49,6 +49,54 @@ func (s *Post) Delete(ctx context.Context, id uint64) (bool, error) {
 }
 
 // GetPageList retrieves a paginated list of posts with optional filters.
+// It calls the DAO layer to fetch the post list and total count.
+// Returns the paginated post list response.
+func (s *Post) GetPageList(ctx context.Context, req *do.PostGetPageListReq) (*do.PostListResp, error) {
+	// Convert to DAO request format
+	daoReq := &do.PostGetListReq{
+		Page:     int(req.Page),
+		PageSize: int(req.PageSize),
+		AuthorId: req.AuthorId,
+		Tags:     req.Tags,
+		Status:   req.Status,
+		Keyword:  req.Keyword,
+	}
+
+	// Call DAO layer to get paginated list
+	list, total, err := dao.PostDao.GetList(ctx, daoReq)
+	if err != nil {
+		return nil, err
+	}
+
+	// Convert entity posts to response DTOs
+	postList := make([]*do.PostResp, 0, len(list))
+	for _, post := range list {
+		postList = append(postList, &do.PostResp{
+			Id:           post.Id,
+			Title:        post.Title,
+			Content:      post.Content,
+			AuthorId:     post.AuthorId,
+			Status:       post.Status,
+			ViewCount:    post.ViewCount,
+			LikeCount:    post.LikeCount,
+			CommentCount: post.CommentCount,
+			Tags:         post.Tags,
+			CoverImage:   post.CoverImage,
+			IsDeleted:    post.IsDeleted,
+			CreatedAt:    post.CreatedAt,
+			UpdatedAt:    post.UpdatedAt,
+		})
+	}
+
+	return &do.PostListResp{
+		Total:    uint64(total),
+		Page:     req.Page,
+		PageSize: req.PageSize,
+		List:     postList,
+	}, nil
+}
+
+// GetPageList retrieves a paginated list of posts with optional filters.
 // It accepts pagination parameters and optional filters (authorId, tags, status, keyword).
 // Returns the post list with total count.
 func (s *Post) GetPageList(ctx context.Context, req *do.PostGetPageListReq) (*do.PostListResp, error) {
