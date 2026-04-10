@@ -18,7 +18,7 @@
 | 1.1.1 设计posts表结构 | ✅ 完成 | database/posts.sql | tuhome-backend-architect | 2026-04-10 20:04 | 0c38cd3 | 包含title, content, author_id, created_at, updated_at等字段 |
 | 1.1.2 设计comments表结构 | ✅ 完成 | database/comments.sql | tuhome-backend-architect | 2026-04-10 20:05 | ba167ac | 支持树形层级结构，parent_id自关联 |
 | 1.1.3 编写建表SQL脚本 | ✅ 完成 | database/init.sql | tuhome-backend-architect | 2026-04-10 20:07 | 4914263b | 生成完整的init.sql，整合posts和comments表 |
-| 1.1.4 执行建表SQL脚本 | ⬜ 待开始 | - | tuhome-backend-architect | - | - | 执行init.sql创建数据库表 |
+| 1.1.4 执行建表SQL脚本 | ✅ 完成 | - | tuhome-backend-architect | 2026-04-10 20:43 | 4914263b | 执行init.sql创建数据库表 |
 
 ### 1.2 后端项目初始化
 
