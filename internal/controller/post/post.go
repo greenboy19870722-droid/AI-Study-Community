@@ -100,11 +100,9 @@ func (c *cPost) Delete(ctx context.Context, req *do.PostDeleteReq) (res *do.Post
 func (c *cPost) RegisterRoute(s *ghttp.Server) {
 	group := s.Group("/api/post")
 	group.Middleware(ghttp.MiddlewareHandlerResponse)
-	group.Bind(
-		c.Create,
-		c.Update,
-		c.Delete,
-		c.List,
-		c.GetDetail,
-	)
+	group.POST("/create", c.Create)
+	group.POST("/update", c.Update)
+	group.POST("/delete", c.Delete)
+	group.GET("/list", c.List)
+	group.GET("/detail", c.GetDetail)
 }

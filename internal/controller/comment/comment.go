@@ -85,11 +85,9 @@ func (c *cComment) GetTree(ctx context.Context, req *do.CommentGetTreeReq) (res 
 func (c *cComment) RegisterRoute(s *ghttp.Server) {
 	group := s.Group("/api/comment")
 	group.Middleware(ghttp.MiddlewareHandlerResponse)
-	group.Bind(
-		c.Create,
-		c.Reply,
-		c.Delete,
-		c.GetDetail,
-		c.GetTree,
-	)
+	group.POST("/create", c.Create)
+	group.POST("/reply", c.Reply)
+	group.POST("/delete", c.Delete)
+	group.GET("/detail", c.GetDetail)
+	group.GET("/tree", c.GetTree)
 }
