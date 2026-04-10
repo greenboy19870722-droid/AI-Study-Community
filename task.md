@@ -76,7 +76,7 @@
 
 | 任务名称 | 当前状态 | 修改文件 | 完成agentId | 完成时间 | 提交commit前8位 | 备注 |
 |---------|---------|---------|------------|---------|----------------|------|
-| 2.4.1 帖子列表页（分页+展示） | ⬜ 待开始 | - | tuhome-frontend-developer | - | - | views/post/PostList.vue |
+| 2.4.1 帖子列表页（分页+展示） | ✅ 完成 | frontend/src/views/post/PostList.vue | tuhome-frontend-developer | 2026-04-10 20:54 | 034cd08 | views/post/PostList.vue |
 | 2.4.2 帖子详情页 | ⬜ 待开始 | - | tuhome-frontend-developer | - | - | views/post/PostDetail.vue |
 | 2.4.3 发布帖子页 | ⬜ 待开始 | - | tuhome-frontend-developer | - | - | views/post/PostCreate.vue |
 | 2.4.4 编辑帖子页 | ⬜ 待开始 | - | tuhome-frontend-developer | - | - | views/post/PostEdit.vue |
