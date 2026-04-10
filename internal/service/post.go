@@ -30,6 +30,13 @@ func (s *Post) Create(ctx context.Context, req *do.PostCreateReq) (*do.PostCreat
 	}, nil
 }
 
+// GetDetail retrieves a single post by ID.
+// It calls the DAO layer to fetch the post details.
+// Returns the post entity or nil if not found.
+func (s *Post) GetDetail(ctx context.Context, id uint64) (*entity.Post, error) {
+	return dao.PostDao.GetOne(ctx, id)
+}
+
 // Delete soft-deletes a post by ID.
 // It calls the DAO layer to perform the deletion.
 // Returns true if the deletion was successful.
