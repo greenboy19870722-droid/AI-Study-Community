@@ -97,12 +97,12 @@
 | 任务名称 | 当前状态 | 修改文件 | 完成agentId | 完成时间 | 提交commit前8位 | 备注 |
 |---------|---------|---------|------------|---------|----------------|------|
 | 3.1.1 创建Comment模型定义 | ✅ 完成 | internal/model/entity/comment.go | tuhome-backend-architect | 2026-04-10 21:06 | a98c3e3 | gmodel.Comment实体 |
-| 3.1.2 创建Comment新增/删除/查询输入输出结构体 | ⬜ 待开始 | - | tuhome-backend-architect | - | - | Do结构体定义 |
-| 3.1.3 创建Comment数据访问方法-Insert | ⬜ 待开始 | - | tuhome-backend-architect | - | - | dao.Comment.Insert() |
-| 3.1.4 创建Comment数据访问方法-Delete | ⬜ 待开始 | - | tuhome-backend-architect | - | - | dao.Comment.Delete() |
-| 3.1.5 创建Comment数据访问方法-GetOne | ⬜ 待开始 | - | tuhome-backend-architect | - | - | dao.Comment.GetOne() |
-| 3.1.6 创建Comment数据访问方法-GetByPostId | ⬜ 待开始 | - | tuhome-backend-architect | - | - | dao.Comment.GetByPostId()一级评论 |
-| 3.1.7 创建Comment数据访问方法-GetChildren | ⬜ 待开始 | - | tuhome-backend-architect | - | - | dao.Comment.GetChildren()子评论 |
+| 3.1.2 创建Comment新增/删除/查询输入输出结构体 | ✅ 完成 | internal/model/do/comment_do.go | tuhome-backend-architect | 2026-04-10 21:07 | aa65bad | Do结构体定义 |
+| 3.1.3 创建Comment数据访问方法-Insert | ✅ 完成 | internal/dao/comment.go | tuhome-orchestrator:subagent:6748d178 | 2026-04-10 21:16 | 7f16e74 | dao.Comment.Insert() |
+| 3.1.4 创建Comment数据访问方法-Delete | ✅ 完成 | internal/dao/comment.go | tuhome-orchestrator:subagent:6748d178 | 2026-04-10 21:16 | 7f16e74 | dao.Comment.Delete() 软删除 |
+| 3.1.5 创建Comment数据访问方法-GetOne | ✅ 完成 | internal/dao/comment.go | tuhome-orchestrator:subagent:6748d178 | 2026-04-10 21:16 | 7f16e74 | dao.Comment.GetOne() |
+| 3.1.6 创建Comment数据访问方法-GetByPostId | ✅ 完成 | internal/dao/comment.go | tuhome-orchestrator:subagent:6748d178 | 2026-04-10 21:16 | 7f16e74 | dao.Comment.GetByPostId()一级评论 |
+| 3.1.7 创建Comment数据访问方法-GetChildren | ✅ 完成 | internal/dao/comment.go | tuhome-orchestrator:subagent:6748d178 | 2026-04-10 21:16 | 7f16e74 | dao.Comment.GetChildren()子评论, GetAllChildrenByParentIds() |
 
 ### 3.2 后端-Comment业务层与接口层
 
