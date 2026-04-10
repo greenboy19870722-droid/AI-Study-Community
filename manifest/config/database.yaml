@@ -1,0 +1,19 @@
+database:
+  # 数据库类型：mysql
+  type: "mysql"
+  # 数据库链接配置
+  link: "root:root@tcp(localhost:3306)/ai_study_community?charset=utf8mb4&parseTime=True&loc=Local"
+  # 最大连接数
+  maxOpenConns: 100
+  # 最大空闲连接数
+  maxIdleConns: 10
+  # 连接最大生命周期（秒）
+  maxLifetime: 3600
+  # 慢查询阈值（毫秒）
+  slowThreshold: 500
+  # 是否显示SQL语句
+  showSql: true
+  # 是否显示执行时间
+  showExecTime: true
+  # 自动创建表（开发环境开启）
+  autoCreate: false
