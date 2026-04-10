@@ -31,7 +31,7 @@
 
 | 任务名称 | 当前状态 | 修改文件 | 完成agentId | 完成时间 | 提交commit前8位 | 备注 |
 |---------|---------|---------|------------|---------|----------------|------|
-| 1.3.1 初始化Vue3 + Vite项目 | ⬜ 待开始 | - | tuhome-frontend-developer | - | - | 使用create-vite模板 |
+| 1.3.1 初始化Vue3 + Vite项目 | ✅ 完成 | frontend/ | tuhome-frontend-developer | 2026-04-10 20:17 | 2021ebc | 使用create-vite模板 |
 | 1.3.2 安装依赖（axios, vue-router, pinia等） | ⬜ 待开始 | - | tuhome-frontend-developer | - | - | 核心依赖包 |
 | 1.3.3 配置项目目录结构 | ⬜ 待开始 | - | tuhome-frontend-developer | - | - | views/components/api/store/router目录 |
 | 1.3.4 配置API请求基地址 | ⬜ 待开始 | - | tuhome-frontend-developer | - | - | axios baseURL配置 |
