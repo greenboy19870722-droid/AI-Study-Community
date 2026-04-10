@@ -86,7 +86,7 @@
 
 | 任务名称 | 当前状态 | 修改文件 | 完成agentId | 完成时间 | 提交commit前8位 | 备注 |
 |---------|---------|---------|------------|---------|----------------|------|
-| 2.5.1 配置帖子相关路由 | ⬜ 待开始 | - | tuhome-frontend-developer | - | - | router/index.js配置 |
+| 2.5.1 配置帖子相关路由 | ✅ 完成 | frontend/src/router/index.js, frontend/src/main.js, frontend/src/App.vue | tuhome-frontend-developer | 2026-04-10 21:06 | 7f48779 | router/index.js配置 |
 
 ---
 
@@ -96,7 +96,7 @@
 
 | 任务名称 | 当前状态 | 修改文件 | 完成agentId | 完成时间 | 提交commit前8位 | 备注 |
 |---------|---------|---------|------------|---------|----------------|------|
-| 3.1.1 创建Comment模型定义 | ⬜ 待开始 | - | tuhome-backend-architect | - | - | gmodel.Comment实体 |
+| 3.1.1 创建Comment模型定义 | ✅ 完成 | internal/model/entity/comment.go | tuhome-backend-architect | 2026-04-10 21:06 | a98c3e3 | gmodel.Comment实体 |
 | 3.1.2 创建Comment新增/删除/查询输入输出结构体 | ⬜ 待开始 | - | tuhome-backend-architect | - | - | Do结构体定义 |
 | 3.1.3 创建Comment数据访问方法-Insert | ⬜ 待开始 | - | tuhome-backend-architect | - | - | dao.Comment.Insert() |
 | 3.1.4 创建Comment数据访问方法-Delete | ⬜ 待开始 | - | tuhome-backend-architect | - | - | dao.Comment.Delete() |
