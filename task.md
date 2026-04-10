@@ -55,9 +55,9 @@
 
 | 任务名称 | 当前状态 | 修改文件 | 完成agentId | 完成时间 | 提交commit前8位 | 备注 |
 |---------|---------|---------|------------|---------|----------------|------|
-| 2.2.1 实现Post业务方法-Create | ⬜ 待开始 | - | tuhome-backend-architect | - | - | service.Post.Create() |
-| 2.2.2 实现Post业务方法-Delete | ⬜ 待开始 | - | tuhome-backend-architect | - | - | service.Post.Delete() |
-| 2.2.3 实现Post业务方法-GetDetail | ⬜ 待开始 | - | tuhome-backend-architect | - | - | service.Post.GetDetail() |
+| 2.2.1 实现Post业务方法-Create | ✅ 完成 | internal/service/post.go | tuhome-backend-architect | 2026-04-10 20:32 | 2b8ff65 | service.Post.Create() |
+| 2.2.2 实现Post业务方法-Delete | ✅ 完成 | internal/service/post.go | tuhome-orchestrator:subagent:2328be6f | 2026-04-10 20:35 | 012c508 | service.Post.Delete() |
+| 2.2.3 实现Post业务方法-GetDetail | ✅ 完成 | internal/service/post.go | tuhome-orchestrator:subagent:d2c94a75 | 2026-04-10 20:34 | dfad6ce | service.Post.GetDetail() |
 | 2.2.4 实现Post业务方法-GetPageList | ⬜ 待开始 | - | tuhome-backend-architect | - | - | service.Post.GetPageList() |
 | 2.2.5 实现【发布帖子】API接口 | ⬜ 待开始 | - | tuhome-backend-architect | - | - | POST /api/post/create |
 | 2.2.6 实现【删除帖子】API接口 | ⬜ 待开始 | - | tuhome-backend-architect | - | - | POST /api/post/delete |
