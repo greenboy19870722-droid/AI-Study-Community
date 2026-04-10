@@ -137,18 +137,18 @@
 
 | 任务名称 | 当前状态 | 修改文件 | 完成agentId | 完成时间 | 提交commit前8位 | 备注 |
 |---------|---------|---------|------------|---------|----------------|------|
-| 3.5.1 评论列表组件（层级树形结构） | ⬜ 待开始 | - | tuhome-frontend-developer | - | - | components/comment/CommentTree.vue |
-| 3.5.2 一级评论项组件 | ⬜ 待开始 | - | tuhome-frontend-developer | - | - | components/comment/CommentItem.vue |
-| 3.5.3 二级回复项组件 | ⬜ 待开始 | - | tuhome-frontend-developer | - | - | components/comment/ReplyItem.vue |
-| 3.5.4 评论输入组件（支持回复） | ⬜ 待开始 | - | tuhome-frontend-developer | - | - | components/comment/CommentInput.vue |
-| 3.5.5 评论分页组件 | ⬜ 待开始 | - | tuhome-frontend-developer | - | - | components/comment/CommentPagination.vue |
+| 3.5.1 评论列表组件（层级树形结构） | ✅ 完成 | frontend/src/components/comment/ | tuhome-orchestrator:subagent:0548f112 | 2026-04-10 21:48 | 304e8f2 | components/comment/CommentTree.vue |
+| 3.5.2 一级评论项组件 | ✅ 完成 | frontend/src/components/comment/ | tuhome-orchestrator:subagent:0548f112 | 2026-04-10 21:48 | 304e8f2 | components/comment/CommentItem.vue |
+| 3.5.3 二级回复项组件 | ✅ 完成 | frontend/src/components/comment/ | tuhome-orchestrator:subagent:0548f112 | 2026-04-10 21:48 | 304e8f2 | components/comment/ReplyItem.vue |
+| 3.5.4 评论输入组件（支持回复） | ✅ 完成 | frontend/src/components/comment/ | tuhome-orchestrator:subagent:0548f112 | 2026-04-10 21:48 | 304e8f2 | components/comment/CommentInput.vue |
+| 3.5.5 评论分页组件 | ✅ 完成 | frontend/src/components/comment/ | tuhome-orchestrator:subagent:0548f112 | 2026-04-10 21:48 | 304e8f2 | components/comment/CommentPagination.vue |
 
 ### 3.6 前端-Comment路由配置
 
 | 任务名称 | 当前状态 | 修改文件 | 完成agentId | 完成时间 | 提交commit前8位 | 备注 |
 |---------|---------|---------|------------|---------|----------------|------|
-| 3.6.1 配置评论相关路由 | ⬜ 待开始 | - | tuhome-frontend-developer | - | - | 评论相关路由配置 |
-| 3.6.2 路由守卫和权限控制 | ⬜ 待开始 | - | tuhome-frontend-developer | - | - | router guard配置 |
+| 3.6.1 配置评论相关路由 | ✅ 完成 | frontend/src/router/index.js | tuhome-orchestrator:subagent:f593597d | 2026-04-10 21:49 | 5ffccfb | 评论相关路由配置 |
+| 3.6.2 路由守卫和权限控制 | ✅ 完成 | frontend/src/router/index.js | tuhome-orchestrator:subagent:f593597d | 2026-04-10 21:49 | 5ffccfb | router guard配置 |
 
 ---
 
