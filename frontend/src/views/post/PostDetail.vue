@@ -2,7 +2,8 @@
 import { ref, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getPostDetail } from '@/api/post.js'
-import { getCommentTree, createComment, replyComment } from '@/api/comment.js'
+import { getCommentTree, createComment, replyComment, deleteComment } from '@/api/comment.js'
+import { getCurrentUserId, isLoggedIn } from '@/utils/auth.js'
 
 // 获取路由信息
 const route = useRoute()
@@ -70,6 +71,37 @@ const commentTotalPages = computed(() => {
   return Math.ceil(totalComments.value / commentPageSize.value) || 1
 })
 
+// 当前登录用户ID
+const currentUserId = computed(() => getCurrentUserId())
+
+// 是否已登录
+const loggedIn = computed(() => isLoggedIn())
+
+// 检查是否可以删除评论（只能删除自己的评论）
+const canDeleteComment = (authorId) => {
+  return loggedIn.value && currentUserId.value === authorId
+}
+
+// 删除评论
+const handleDeleteComment = async (commentId, authorId) => {
+  if (!canDeleteComment(authorId)) {
+    alert('只能删除自己的评论')
+    return
+  }
+  
+  if (!confirm('确定要删除这条评论吗？')) {
+    return
+  }
+  
+  try {
+    await deleteComment({ id: commentId, authorId })
+    // 刷新评论列表
+    await loadComments()
+  } catch (err) {
+    alert(err.message || '删除评论失败')
+  }
+}
+
 // 加载帖子详情
 const loadPostDetail = async () => {
   const postId = route.params.id || route.query.id
@@ -121,6 +153,12 @@ const loadComments = async () => {
 
 // 提交评论
 const submitComment = async () => {
+  // 检查登录状态
+  if (!loggedIn.value) {
+    alert('请先登录后再评论')
+    return
+  }
+
   if (!commentContent.value.trim()) {
     commentSubmitError.value = '评论内容不能为空'
     return
@@ -138,14 +176,14 @@ const submitComment = async () => {
       await replyComment({
         postId,
         parentId: replyingTo.value.id,
-        authorId: 1, // TODO: 从用户状态获取
+        authorId: currentUserId.value,
         content: commentContent.value.trim(),
       })
     } else {
       // 新增评论
       await createComment({
         postId,
-        authorId: 1, // TODO: 从用户状态获取
+        authorId: currentUserId.value,
         content: commentContent.value.trim(),
       })
     }
