@@ -47,9 +47,9 @@
 | 2.1.1 创建Post模型定义 | ✅ 完成 | internal/model/entity/post.go | tuhome-backend-architect | 2026-04-10 20:22 | 20a9a5a | gmodel.Post实体 |
 | 2.1.2 创建Post新增/删除/查询输入输出结构体 | ✅ 完成 | internal/model/do/post_do.go | tuhome-backend-architect | 2026-04-10 20:24 | 73bea33 | Do CreateReq/Do DeleteReq/Do GetOneReq等 |
 | 2.1.3 创建Post数据访问方法-Insert | ✅ 完成 | internal/dao/post.go | tuhome-backend-architect | 2026-04-10 20:26 | fa0ab9e | dao.Post.Insert() |
-| 2.1.4 创建Post数据访问方法-Delete | ✅ 完成 | internal/dao/post.go | tuhome-backend-architect | 2026-04-10 20:28 | 378d57c | dao.Post.Delete() |
+| 2.1.4 创建Post数据访问方法-Delete | ✅ 完成 | internal/dao/post.go | tuhome-orchestrator:subagent:4f49609e | 2026-04-10 20:32 | fece73f | dao.Post.Delete() 软删除，返回受影响行数 |
 | 2.1.5 创建Post数据访问方法-GetOne | ⬜ 待开始 | - | tuhome-backend-architect | - | - | dao.Post.GetOne() |
-| 2.1.6 创建Post数据访问方法-GetList | ⬜ 待开始 | - | tuhome-backend-architect | - | - | dao.Post.GetList()分页查询 |
+| 2.1.6 创建Post数据访问方法-GetList | ✅ 完成 | internal/dao/post.go | tuhome-orchestrator:subagent:e04dbd6a | 2026-04-10 20:34 | f6758db | dao.Post.GetList()分页查询，支持authorId/tags/status/keyword过滤，created_at DESC排序 |
 
 ### 2.2 后端-Post业务层与接口层
 
