@@ -25,7 +25,7 @@
 |---------|---------|---------|------------|---------|----------------|------|
 | 1.2.1 初始化GoFrame项目目录结构 | ✅ 完成 | model/, dao/, service/, controller/, internal/cmd/, internal/consts/, internal/packed/, manifest/config/, manifest/deploy/ | tuhome-backend-architect | 2026-04-10 20:09 | c573b6cd | model/dao/service/controller/internal/manifest目录结构 |
 | 1.2.2 创建database.yaml配置文件 | ✅ 完成 | manifest/config/database.yaml | tuhome-backend-architect | 2026-04-10 20:10 | 11eb7e5 | 数据库连接配置 |
-| 1.2.3 初始化数据库连接 | ✅ 完成 | internal/dao/dao.go, internal/cmd/cmd.go, manifest/config/config.yaml | tuhome-backend-architect | 2026-04-10 20:11 | cea1b8a1 | g.Database()初始化 |
+| 1.2.3 初始化数据库连接 | ✅ 完成 | internal/dao/dao.go, internal/cmd/cmd.go, manifest/config/config.yaml | tuhome-backend-architect | 2026-04-10 20:11 | 98c71cf7 | g.DB()初始化 |
 
 ### 1.3 前端项目初始化
 
