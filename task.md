@@ -78,7 +78,7 @@
 |---------|---------|---------|------------|---------|----------------|------|
 | 2.4.1 帖子列表页（分页+展示） | ✅ 完成 | frontend/src/views/post/PostList.vue | tuhome-frontend-developer | 2026-04-10 20:54 | 034cd08 | views/post/PostList.vue |
 | 2.4.2 帖子详情页 | ✅ 完成 | frontend/src/views/post/PostDetail.vue | tuhome-frontend-developer | 2026-04-10 21:00 | 27eff74 | views/post/PostDetail.vue |
-| 2.4.3 发布帖子页 | ⬜ 待开始 | - | tuhome-frontend-developer | - | - | views/post/PostCreate.vue |
+| 2.4.3 发布帖子页 | ✅ 完成 | frontend/src/views/post/PostCreate.vue | tuhome-frontend-developer | 2026-04-10 21:05 | ebc21e0 | views/post/PostCreate.vue |
 | 2.4.4 编辑帖子页 | ⬜ 待开始 | - | tuhome-frontend-developer | - | - | views/post/PostEdit.vue |
 
 ### 2.5 前端-Post路由配置
