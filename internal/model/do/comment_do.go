@@ -45,19 +45,20 @@ type CommentGetChildrenReq struct {
 
 // CommentResp comment response
 type CommentResp struct {
-	Id            uint64       `json:"id"`
-	PostId        uint64       `json:"postId"`
-	ParentId      *uint64      `json:"parentId"`
-	Content       string       `json:"content"`
-	AuthorId      uint64       `json:"authorId"`
-	AuthorName    string       `json:"authorName"`
-	ReplyToUserId *uint64      `json:"replyToUserId"`
-	ReplyToAuthor string       `json:"replyToAuthor"`
-	Depth         uint         `json:"depth"`
-	LikeCount     uint         `json:"likeCount"`
-	Status        int          `json:"status"`
-	CreatedAt     *gtime.Time  `json:"createdAt"`
-	UpdatedAt     *gtime.Time  `json:"updatedAt"`
+	Id            uint64        `json:"id"`
+	PostId        uint64        `json:"postId"`
+	UserId        uint64        `json:"userId"       dc:"User ID"`
+	Content       string        `json:"content"`
+	ParentId      *uint64       `json:"parentId"`
+	AuthorId      uint64        `json:"authorId"`
+	AuthorName    string        `json:"authorName"`
+	ReplyToUserId *uint64       `json:"replyToUserId"`
+	ReplyToAuthor string        `json:"replyToAuthor"`
+	Depth         uint          `json:"depth"`
+	LikeCount     uint          `json:"likeCount"`
+	Status        int           `json:"status"`
+	CreatedAt     *gtime.Time   `json:"createdAt"`
+	UpdatedAt     *gtime.Time   `json:"updatedAt"`
 	Children      []*CommentResp `json:"children"`
 }
 
@@ -67,6 +68,28 @@ type CommentListResp struct {
 	Page     int            `json:"page"`
 	PageSize int            `json:"pageSize"`
 	List     []*CommentResp `json:"list"`
+}
+
+// CommentReplyReq reply comment request
+type CommentReplyReq struct {
+	PostId        uint64  `json:"postId" v:"required"`
+	ParentId      uint64  `json:"parentId" v:"required"`
+	Content       string  `json:"content" v:"required"`
+	AuthorId      uint64  `json:"authorId" v:"required"`
+	ReplyToUserId *uint64 `json:"replyToUserId"`
+}
+
+// CommentGetTreeReq get comment tree request
+type CommentGetTreeReq struct {
+	PostId   uint64 `json:"postId" v:"required"`
+	Page     int    `json:"page" d:"1"`
+	PageSize int    `json:"pageSize" d:"20"`
+}
+
+// CommentTreeResp comment tree response
+type CommentTreeResp struct {
+	List []*CommentResp `json:"list" dc:"Comment list (flat)"`
+	Tree []*CommentResp `json:"tree" dc:"Comment tree (hierarchical)"`
 }
 
 // CommentCreateResp create comment response
