@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { ElMessage } from 'element-plus'
 
 // 创建 axios 实例
 const request = axios.create({
@@ -16,14 +17,17 @@ const request = axios.create({
 // 请求拦截器
 request.interceptors.request.use(
   (config) => {
-    // 可在此处添加 token 等认证信息
-    // const token = localStorage.getItem('token')
-    // if (token) {
-    //   config.headers.Authorization = `Bearer ${token}`
-    // }
+    // 添加 token 等认证信息
+    const token = localStorage.getItem('token')
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
+    // 添加公共参数
+    config.headers['X-Request-ID'] = generateUUID()
     return config
   },
   (error) => {
+    ElMessage.error('请求配置错误')
     return Promise.reject(error)
   }
 )
@@ -31,13 +35,16 @@ request.interceptors.request.use(
 // 响应拦截器
 request.interceptors.response.use(
   (response) => {
-    const { code, message, data } = response.data
+    const res = response.data
+    const { code, message, data } = res
+    
     // 根据业务状态码处理
     if (code === 0 || code === 200) {
       return data
     }
+    
     // 其他业务错误
-    console.error(`[API Error] ${message || 'Unknown error'}`)
+    ElMessage.error(message || '请求失败')
     return Promise.reject(new Error(message || 'Request failed'))
   },
   (error) => {
@@ -46,28 +53,48 @@ request.interceptors.response.use(
       const { status, data } = error.response
       switch (status) {
         case 401:
-          console.error('[API Error] Unauthorized - please login')
-          // 可触发跳转到登录页
+          ElMessage.error('登录已过期，请重新登录')
+          // 清除 token 并跳转到登录页
+          localStorage.removeItem('token')
+          window.location.href = '/login'
           break
         case 403:
-          console.error('[API Error] Forbidden - no permission')
+          ElMessage.error('没有权限进行此操作')
           break
         case 404:
-          console.error('[API Error] Not Found')
+          ElMessage.error('请求的资源不存在')
           break
         case 500:
-          console.error('[API Error] Server Error')
+          ElMessage.error('服务器内部错误，请稍后再试')
+          break
+        case 502:
+          ElMessage.error('网关错误，请稍后再试')
+          break
+        case 503:
+          ElMessage.error('服务暂不可用，请稍后再试')
+          break
+        case 504:
+          ElMessage.error('网关超时，请稍后再试')
           break
         default:
-          console.error(`[API Error] HTTP ${status}: ${data?.message || error.message}`)
+          ElMessage.error(data?.message || `请求失败 (HTTP ${status})`)
       }
     } else if (error.request) {
-      console.error('[API Error] No response received - please check network')
+      ElMessage.error('网络连接失败，请检查网络')
     } else {
-      console.error('[API Error]', error.message)
+      ElMessage.error(error.message || '请求配置错误')
     }
     return Promise.reject(error)
   }
 )
+
+// 生成 UUID
+function generateUUID() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0
+    const v = c === 'x' ? r : (r & 0x3 | 0x8)
+    return v.toString(16)
+  })
+}
 
 export default request
