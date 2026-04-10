@@ -1,4 +1,4 @@
-module github.com/gogf/template-single
+module AI-Study-Community
 
 go 1.14
 

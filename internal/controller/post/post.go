@@ -37,6 +37,36 @@ func (c *cPost) GetPageList(ctx context.Context, req *do.PostGetPageListReq) (re
 	return result, nil
 }
 
+// GetDetail handles GET /api/post/detail
+// It accepts a post ID parameter and returns the post details.
+func (c *cPost) GetDetail(ctx context.Context, req *do.PostGetOneReq) (res *do.PostResp, err error) {
+	// Call service layer to get post detail
+	result, err := service.Post.GetDetail(ctx, req.Id)
+	if err != nil {
+		g.Log().Error(ctx, err)
+		return nil, err
+	}
+
+	// Convert entity to response DTO
+	res = &do.PostResp{
+		Id:           result.Id,
+		Title:        result.Title,
+		Content:      result.Content,
+		AuthorId:     result.AuthorId,
+		Status:       result.Status,
+		ViewCount:    result.ViewCount,
+		LikeCount:    result.LikeCount,
+		CommentCount: result.CommentCount,
+		Tags:         result.Tags,
+		CoverImage:   result.CoverImage,
+		IsDeleted:    result.IsDeleted,
+		CreatedAt:    result.CreatedAt,
+		UpdatedAt:    result.UpdatedAt,
+	}
+
+	return res, nil
+}
+
 // Create handles POST /api/post/create
 // It accepts post creation parameters and returns the created post ID.
 func (c *cPost) Create(ctx context.Context, req *do.PostCreateReq) (res *do.PostCreateResp, err error) {
@@ -56,7 +86,8 @@ func (c *cPost) RegisterRoute(s *ghttp.Server) {
 	group := s.Group("/api/post")
 	group.Middleware(ghttp.MiddlewareHandlerResponse)
 	group.Bind(
-		ghttp.HandlerFunc(c.Create),
-		ghttp.HandlerFunc(c.GetPageList),
+		c.Create,
+		c.GetPageList,
+		c.GetDetail,
 	)
 }
