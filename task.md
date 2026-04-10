@@ -44,7 +44,7 @@
 
 | 任务名称 | 当前状态 | 修改文件 | 完成agentId | 完成时间 | 提交commit前8位 | 备注 |
 |---------|---------|---------|------------|---------|----------------|------|
-| 2.1.1 创建Post模型定义 | ⬜ 待开始 | - | tuhome-backend-architect | - | - | gmodel.Post实体 |
+| 2.1.1 创建Post模型定义 | ✅ 完成 | internal/model/entity/post.go | tuhome-backend-architect | 2026-04-10 20:22 | 20a9a5a | gmodel.Post实体 |
 | 2.1.2 创建Post新增/删除/查询输入输出结构体 | ⬜ 待开始 | - | tuhome-backend-architect | - | - | Do CreateReq/Do DeleteReq/Do GetOneReq等 |
 | 2.1.3 创建Post数据访问方法-Insert | ⬜ 待开始 | - | tuhome-backend-architect | - | - | dao.Post.Insert() |
 | 2.1.4 创建Post数据访问方法-Delete | ⬜ 待开始 | - | tuhome-backend-architect | - | - | dao.Post.Delete() |
