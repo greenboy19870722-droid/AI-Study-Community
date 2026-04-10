@@ -37,18 +37,18 @@ func (c *cPost) GetPageList(ctx context.Context, req *do.PostGetPageListReq) (re
 	return result, nil
 }
 
-// Delete handles POST /api/post/delete
-// It accepts a post ID and calls the service layer to soft-delete the post.
-func (c *cPost) Delete(ctx context.Context, req *do.PostDeleteReq) (res *do.PostDeleteResp, err error) {
-	success, err := service.Post.Delete(ctx, req.Id)
+// Create handles POST /api/post/create
+// It accepts post creation parameters and returns the created post ID.
+func (c *cPost) Create(ctx context.Context, req *do.PostCreateReq) (res *do.PostCreateResp, err error) {
+	// Validate required fields are already handled by gvalid via service layer
+	// Call service layer to create the post
+	result, err := service.Post.Create(ctx, req)
 	if err != nil {
 		g.Log().Error(ctx, err)
 		return nil, err
 	}
 
-	return &do.PostDeleteResp{
-		Success: success,
-	}, nil
+	return result, nil
 }
 
 // RegisterRoute registers the post controller routes.
@@ -56,7 +56,7 @@ func (c *cPost) RegisterRoute(s *ghttp.Server) {
 	group := s.Group("/api/post")
 	group.Middleware(ghttp.MiddlewareHandlerResponse)
 	group.Bind(
+		ghttp.HandlerFunc(c.Create),
 		ghttp.HandlerFunc(c.GetPageList),
-		ghttp.HandlerFunc(c.Delete),
 	)
 }
