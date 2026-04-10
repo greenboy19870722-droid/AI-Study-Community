@@ -27,13 +27,13 @@ func (p *Post) Insert(ctx context.Context, req *do.PostCreateReq) (uint64, error
 		Title:      req.Title,
 		Content:    req.Content,
 		AuthorId:   req.AuthorId,
-		Status:      1, // Normal status
+		Status:     1, // Normal status
 		Tags:       req.Tags,
 		CoverImage: req.CoverImage,
 		IsDeleted:  0, // Not deleted
 	}
 
-	result, err := p.db().Model(p.table).Data(post).Insert()
+	result, err := p.db().Data(post).Insert()
 	if err != nil {
 		return 0, err
 	}
@@ -51,9 +51,12 @@ func (p *Post) Insert(ctx context.Context, req *do.PostCreateReq) (uint64, error
 // Only returns non-deleted posts (is_deleted=0).
 func (p *Post) GetOne(ctx context.Context, id uint64) (*entity.Post, error) {
 	var post *entity.Post
-	err := p.db().Where("id", id).Where("is_deleted", 0).Scan(&post)
+	err := p.db().Where("id", id).Where("is_deleted", 0).One(&post)
 	if err != nil {
 		return nil, err
+	}
+	if post == nil {
+		return nil, nil
 	}
 	return post, nil
 }
@@ -62,7 +65,7 @@ func (p *Post) GetOne(ctx context.Context, id uint64) (*entity.Post, error) {
 // It uses soft-delete pattern based on the IsDeleted field.
 // Returns the number of affected rows.
 func (p *Post) Delete(ctx context.Context, id uint64) (int64, error) {
-	result, err := p.db().Model(p.table).
+	result, err := p.db().
 		Where("id", id).
 		Data(map[string]interface{}{
 			"is_deleted": 1,
@@ -95,12 +98,11 @@ func (p *Post) GetList(ctx context.Context, req *do.PostGetListReq) ([]*entity.P
 		m = m.Where("status", *req.Status)
 	}
 	if req.Keyword != "" {
-		m = m.WhereLike("title", "%"+req.Keyword+"%").
-			OrWhereLike("content", "%"+req.Keyword+"%")
+		m = m.WhereOrLike("title", "%"+req.Keyword+"%").WhereOrLike("content", "%"+req.Keyword+"%")
 	}
 
 	// Count total records
-	total, err := m.Count(ctx)
+	total, err := m.Count()
 	if err != nil {
 		return nil, 0, err
 	}
@@ -117,15 +119,43 @@ func (p *Post) GetList(ctx context.Context, req *do.PostGetListReq) ([]*entity.P
 	offset := (page - 1) * pageSize
 
 	// Fetch paginated results ordered by created_at DESC
-	list, err := m.Order("created_at DESC").
+	result, err := m.Order("created_at DESC").
 		Offset(offset).
 		Limit(pageSize).
-		Select(ctx)
+		All()
 	if err != nil {
 		return nil, 0, err
 	}
 
-	return list, total, nil
+	// Convert Result to []*entity.Post
+	posts := make([]*entity.Post, 0, len(result))
+	for _, record := range result {
+		post := &entity.Post{
+			Id:           record["id"].Uint64(),
+			Title:        record["title"].String(),
+			Content:      record["content"].String(),
+			AuthorId:     record["author_id"].Uint64(),
+			Status:       record["status"].Int(),
+			ViewCount:    record["view_count"].Uint(),
+			LikeCount:    record["like_count"].Uint(),
+			CommentCount: record["comment_count"].Uint(),
+			Tags:         record["tags"].String(),
+			CoverImage:   record["cover_image"].String(),
+			IsDeleted:    record["is_deleted"].Int(),
+		}
+		if !record["created_at"].IsZero() {
+			post.CreatedAt = record["created_at"].GTime()
+		}
+		if !record["updated_at"].IsZero() {
+			post.UpdatedAt = record["updated_at"].GTime()
+		}
+		if !record["deleted_at"].IsZero() {
+			post.DeletedAt = record["deleted_at"].GTime()
+		}
+		posts = append(posts, post)
+	}
+
+	return posts, total, nil
 }
 
 // db returns the underlying database model for further operations

@@ -17,7 +17,7 @@ var (
 func Init(ctx context.Context) error {
 	// Use g.DB() to initialize the database connection
 	// The configuration will be automatically loaded from manifest/config/config.yaml
-	Database = g.Database()
+	Database = g.DB()
 	
 	g.Log().Info(ctx, "database connection initialized successfully")
 	return nil
