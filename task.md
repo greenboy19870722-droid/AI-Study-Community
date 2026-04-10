@@ -97,7 +97,7 @@
 | 任务名称 | 当前状态 | 修改文件 | 完成agentId | 完成时间 | 提交commit前8位 | 备注 |
 |---------|---------|---------|------------|---------|----------------|------|
 | 3.1.1 创建Comment模型定义 | ✅ 完成 | internal/model/entity/comment.go | tuhome-backend-architect | 2026-04-10 21:06 | a98c3e3 | gmodel.Comment实体 |
-| 3.1.2 创建Comment新增/删除/查询输入输出结构体 | ✅ 完成 | internal/model/do/comment_do.go | tuhome-backend-architect | 2026-04-10 21:07 | aa65bad | Do结构体定义 |
+| 3.1.2 创建Comment新增/删除/查询输入输出结构体 | ✅ 完成 | internal/model/do/comment_do.go | tuhome-orchestrator:subagent:adf0bd31 | 2026-04-10 21:16 | 705f1e3 | 新增CommentReplyReq/CommentGetTreeReq/CommentTreeResp，补充UserId字段 |
 | 3.1.3 创建Comment数据访问方法-Insert | ✅ 完成 | internal/dao/comment.go | tuhome-orchestrator:subagent:6748d178 | 2026-04-10 21:16 | 7f16e74 | dao.Comment.Insert() |
 | 3.1.4 创建Comment数据访问方法-Delete | ✅ 完成 | internal/dao/comment.go | tuhome-orchestrator:subagent:6748d178 | 2026-04-10 21:16 | 7f16e74 | dao.Comment.Delete() 软删除 |
 | 3.1.5 创建Comment数据访问方法-GetOne | ✅ 完成 | internal/dao/comment.go | tuhome-orchestrator:subagent:6748d178 | 2026-04-10 21:16 | 7f16e74 | dao.Comment.GetOne() |
@@ -108,7 +108,7 @@
 
 | 任务名称 | 当前状态 | 修改文件 | 完成agentId | 完成时间 | 提交commit前8位 | 备注 |
 |---------|---------|---------|------------|---------|----------------|------|
-| 3.2.1 实现Comment业务方法-Create | ⬜ 待开始 | - | tuhome-backend-architect | - | - | service.Comment.Create() |
+| 3.2.1 实现Comment业务方法-Create | ✅ 完成 | internal/service/comment.go | tuhome-orchestrator:subagent:098319ba-b3be-49a8-a598-649018c04f24 | 2026-04-10 21:25 | a722d8f | service.Comment.Create() |
 | 3.2.2 实现Comment业务方法-Reply | ⬜ 待开始 | - | tuhome-backend-architect | - | - | service.Comment.Reply()回复功能 |
 | 3.2.3 实现Comment业务方法-Delete | ⬜ 待开始 | - | tuhome-backend-architect | - | - | service.Comment.Delete() |
 | 3.2.4 实现Comment业务方法-GetDetail | ⬜ 待开始 | - | tuhome-backend-architect | - | - | service.Comment.GetDetail() |

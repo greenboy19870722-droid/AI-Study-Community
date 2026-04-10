@@ -3,6 +3,7 @@ package cmd
 import (
 	"context"
 
+	"AI-Study-Community/internal/controller/comment"
 	"AI-Study-Community/internal/controller/post"
 	"AI-Study-Community/internal/dao"
 
@@ -23,6 +24,7 @@ var (
 			}
 			s := g.Server()
 			post.Post.RegisterRoute(s)
+			comment.Comment.RegisterRoute(s)
 			s.Run()
 			return nil
 		},

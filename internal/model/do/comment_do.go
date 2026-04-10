@@ -15,7 +15,27 @@ type CommentCreateReq struct {
 
 // CommentDeleteReq delete comment request
 type CommentDeleteReq struct {
-	Id uint64 `json:"id" v:"required"`
+	Id       uint64 `json:"id" v:"required"`
+	AuthorId uint64 `json:"authorId" v:"required"`
+}
+
+// CommentDeleteResp delete comment response
+type CommentDeleteResp struct {
+	Success bool `json:"success"`
+}
+
+// CommentReplyReq reply comment request
+type CommentReplyReq struct {
+	PostId        uint64  `json:"postId" v:"required"`
+	ParentId      uint64  `json:"parentId" v:"required"`
+	Content       string  `json:"content" v:"required"`
+	AuthorId      uint64  `json:"authorId" v:"required"`
+	ReplyToUserId *uint64 `json:"replyToUserId"`
+}
+
+// CommentReplyResp reply comment response
+type CommentReplyResp struct {
+	Id uint64 `json:"id"`
 }
 
 // CommentUpdateReq update comment request
@@ -70,15 +90,6 @@ type CommentListResp struct {
 	List     []*CommentResp `json:"list"`
 }
 
-// CommentReplyReq reply comment request
-type CommentReplyReq struct {
-	PostId        uint64  `json:"postId" v:"required"`
-	ParentId      uint64  `json:"parentId" v:"required"`
-	Content       string  `json:"content" v:"required"`
-	AuthorId      uint64  `json:"authorId" v:"required"`
-	ReplyToUserId *uint64 `json:"replyToUserId"`
-}
-
 // CommentGetTreeReq get comment tree request
 type CommentGetTreeReq struct {
 	PostId   uint64 `json:"postId" v:"required"`
@@ -88,16 +99,12 @@ type CommentGetTreeReq struct {
 
 // CommentTreeResp comment tree response
 type CommentTreeResp struct {
-	List []*CommentResp `json:"list" dc:"Comment list (flat)"`
-	Tree []*CommentResp `json:"tree" dc:"Comment tree (hierarchical)"`
+	Total int              `json:"total" dc:"Total count"`
+	List  []*CommentResp   `json:"list" dc:"Comment list (flat)"`
+	Tree  []*CommentResp   `json:"tree" dc:"Comment tree (hierarchical)"`
 }
 
 // CommentCreateResp create comment response
 type CommentCreateResp struct {
 	Id uint64 `json:"id"`
-}
-
-// CommentDeleteResp delete comment response
-type CommentDeleteResp struct {
-	Success bool `json:"success"`
 }

@@ -21,12 +21,13 @@ var CommentDao = &Comment{
 }
 
 // Insert inserts a new comment record into the database.
-// For top-level comments (parentId is nil), depth=0.
-// For replies, depth = parent.depth + 1.
+// It creates a comment with status=1 (normal) and depth=0 for top-level comments.
+// Returns the inserted record's ID.
 func (c *Comment) Insert(ctx context.Context, req *do.CommentCreateReq) (uint64, error) {
+	// Determine depth: if ParentId is nil, depth is 0 (top-level comment)
 	depth := uint(0)
 	if req.ParentId != nil {
-		// Get parent comment to calculate depth
+		// Get parent comment to determine depth
 		parent, err := c.GetOne(ctx, *req.ParentId)
 		if err != nil {
 			return 0, err
@@ -43,8 +44,9 @@ func (c *Comment) Insert(ctx context.Context, req *do.CommentCreateReq) (uint64,
 		AuthorId:     req.AuthorId,
 		ReplyToUserId: req.ReplyToUserId,
 		Depth:        depth,
+		LikeCount:    0,
 		Status:       1, // Normal status
-		IsDeleted:    0,  // Not deleted
+		IsDeleted:    0, // Not deleted
 	}
 
 	result, err := c.db().Data(comment).Insert()
@@ -62,7 +64,7 @@ func (c *Comment) Insert(ctx context.Context, req *do.CommentCreateReq) (uint64,
 
 // GetOne queries a single comment record by ID.
 // It returns the comment entity or nil if not found.
-// Only returns non-deleted comments.
+// Only returns non-deleted comments (is_deleted=0).
 func (c *Comment) GetOne(ctx context.Context, id uint64) (*entity.Comment, error) {
 	var comment entity.Comment
 	record, err := c.db().Where("id", id).Where("is_deleted", 0).One()
@@ -78,24 +80,8 @@ func (c *Comment) GetOne(ctx context.Context, id uint64) (*entity.Comment, error
 	return &comment, nil
 }
 
-// Update updates an existing comment record content.
-// Returns the number of affected rows.
-func (c *Comment) Update(ctx context.Context, req *do.CommentUpdateReq) (int64, error) {
-	result, err := c.db().
-		Where("id", req.Id).
-		Where("is_deleted", 0).
-		Data(map[string]interface{}{
-			"content":    req.Content,
-			"updated_at": gtime.Now(),
-		}).
-		Update()
-	if err != nil {
-		return 0, err
-	}
-	return result.RowsAffected()
-}
-
 // Delete soft-deletes a comment by setting IsDeleted=1 and DeletedAt.
+// It uses soft-delete pattern based on the IsDeleted field.
 // Returns the number of affected rows.
 func (c *Comment) Delete(ctx context.Context, id uint64) (int64, error) {
 	result, err := c.db().
@@ -111,15 +97,19 @@ func (c *Comment) Delete(ctx context.Context, id uint64) (int64, error) {
 	return result.RowsAffected()
 }
 
-// GetByPostId retrieves first-level comments (parent_id IS NULL) for a post with pagination.
-// Returns the comment list, total count, and any error.
+// GetByPostId retrieves paginated top-level comments (parent_id IS NULL) for a post.
+// Returns the comment list, total count, and any error encountered.
 func (c *Comment) GetByPostId(ctx context.Context, req *do.CommentGetByPostIdReq) ([]*entity.Comment, int, error) {
 	m := c.db()
 
-	// Apply filters: only top-level comments (parent_id IS NULL) and non-deleted
-	m = m.Where("post_id", req.PostId).
-		Where("parent_id IS NULL").
-		Where("is_deleted", 0)
+	// Apply soft-delete filter (only show non-deleted comments)
+	m = m.Where("is_deleted", 0)
+
+	// Filter by post ID
+	m = m.Where("post_id", req.PostId)
+
+	// Only get top-level comments (parent_id IS NULL)
+	m = m.Where("parent_id", nil)
 
 	// Count total records
 	total, err := m.Count()
@@ -138,8 +128,8 @@ func (c *Comment) GetByPostId(ctx context.Context, req *do.CommentGetByPostIdReq
 	}
 	offset := (page - 1) * pageSize
 
-	// Fetch paginated results ordered by created_at ASC (oldest first for comments)
-	result, err := m.Order("created_at ASC").
+	// Fetch paginated results ordered by created_at DESC
+	result, err := m.Order("created_at DESC").
 		Offset(offset).
 		Limit(pageSize).
 		All()
@@ -152,6 +142,7 @@ func (c *Comment) GetByPostId(ctx context.Context, req *do.CommentGetByPostIdReq
 	for _, record := range result {
 		var comment entity.Comment
 		if err := record.Struct(&comment); err != nil {
+			// Skip records that fail to convert
 			continue
 		}
 		comments = append(comments, &comment)
@@ -160,14 +151,16 @@ func (c *Comment) GetByPostId(ctx context.Context, req *do.CommentGetByPostIdReq
 	return comments, total, nil
 }
 
-// GetChildren retrieves child comments by parent_id with pagination.
-// Returns the comment list, total count, and any error.
+// GetChildren retrieves child comments by parent ID.
+// Returns the comment list, total count, and any error encountered.
 func (c *Comment) GetChildren(ctx context.Context, req *do.CommentGetChildrenReq) ([]*entity.Comment, int, error) {
 	m := c.db()
 
-	// Apply filters: only children of the given parent and non-deleted
-	m = m.Where("parent_id", req.ParentId).
-		Where("is_deleted", 0)
+	// Apply soft-delete filter (only show non-deleted comments)
+	m = m.Where("is_deleted", 0)
+
+	// Filter by parent ID
+	m = m.Where("parent_id", req.ParentId)
 
 	// Count total records
 	total, err := m.Count()
@@ -186,7 +179,7 @@ func (c *Comment) GetChildren(ctx context.Context, req *do.CommentGetChildrenReq
 	}
 	offset := (page - 1) * pageSize
 
-	// Fetch paginated results ordered by created_at ASC
+	// Fetch paginated results ordered by created_at ASC (chronological order)
 	result, err := m.Order("created_at ASC").
 		Offset(offset).
 		Limit(pageSize).
@@ -200,40 +193,13 @@ func (c *Comment) GetChildren(ctx context.Context, req *do.CommentGetChildrenReq
 	for _, record := range result {
 		var comment entity.Comment
 		if err := record.Struct(&comment); err != nil {
+			// Skip records that fail to convert
 			continue
 		}
 		comments = append(comments, &comment)
 	}
 
 	return comments, total, nil
-}
-
-// GetAllChildrenByParentIds retrieves all child comments for multiple parent IDs in one query.
-// This is more efficient than calling GetChildren multiple times.
-func (c *Comment) GetAllChildrenByParentIds(ctx context.Context, parentIds []uint64) ([]*entity.Comment, error) {
-	if len(parentIds) == 0 {
-		return nil, nil
-	}
-
-	m := c.db()
-	result, err := m.Where("parent_id IN (?)", parentIds).
-		Where("is_deleted", 0).
-		Order("created_at ASC").
-		All()
-	if err != nil {
-		return nil, err
-	}
-
-	comments := make([]*entity.Comment, 0, len(result))
-	for _, record := range result {
-		var comment entity.Comment
-		if err := record.Struct(&comment); err != nil {
-			continue
-		}
-		comments = append(comments, &comment)
-	}
-
-	return comments, nil
 }
 
 // db returns the underlying database model for further operations
