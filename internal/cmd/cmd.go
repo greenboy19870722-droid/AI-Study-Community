@@ -17,7 +17,7 @@ var (
 		Brief: "start http server",
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			// Initialize database connection
-			if err = dao.Init(); err != nil {
+			if err = dao.Init(ctx); err != nil {
 				g.Log().Fatal(ctx, err)
 				return err
 			}
