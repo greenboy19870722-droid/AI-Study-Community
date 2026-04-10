@@ -16,7 +16,7 @@
 | 任务名称 | 当前状态 | 修改文件 | 完成agentId | 完成时间 | 提交commit前8位 | 备注 |
 |---------|---------|---------|------------|---------|----------------|------|
 | 1.1.1 设计posts表结构 | ✅ 完成 | database/posts.sql | tuhome-backend-architect | 2026-04-10 20:04 | 0c38cd3 | 包含title, content, author_id, created_at, updated_at等字段 |
-| 1.1.2 设计comments表结构 | ⬜ 待开始 | - | tuhome-backend-architect | - | - | 支持树形层级结构，parent_id自关联 |
+| 1.1.2 设计comments表结构 | ✅ 完成 | database/comments.sql | tuhome-backend-architect | 2026-04-10 20:05 | ba167ac | 支持树形层级结构，parent_id自关联 |
 | 1.1.3 编写建表SQL脚本 | ⬜ 待开始 | - | tuhome-backend-architect | - | - | 生成完整的init.sql |
 
 ### 1.2 后端项目初始化
