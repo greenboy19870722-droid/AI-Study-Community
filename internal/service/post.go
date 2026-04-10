@@ -37,6 +37,17 @@ func (s *Post) GetDetail(ctx context.Context, id uint64) (*entity.Post, error) {
 	return dao.PostDao.GetOne(ctx, id)
 }
 
+// Update updates an existing post by ID.
+// It validates the input and calls the DAO layer to update the post.
+// Returns true if the update was successful.
+func (s *Post) Update(ctx context.Context, req *do.PostUpdateReq) (bool, error) {
+	rowsAffected, err := dao.PostDao.Update(ctx, req)
+	if err != nil {
+		return false, err
+	}
+	return rowsAffected > 0, nil
+}
+
 // Delete soft-deletes a post by ID.
 // It calls the DAO layer to perform the deletion.
 // Returns true if the deletion was successful.

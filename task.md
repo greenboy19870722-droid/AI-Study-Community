@@ -65,6 +65,7 @@
 | 2.2.7 实现【查询帖子详情】API接口 | ✅ 完成 | internal/controller/post/post.go, internal/cmd/cmd.go | tuhome-orchestrator:subagent:4b5c79cf | 2026-04-10 20:45 | 4b37a67 | GET /api/post/detail |
 | 2.2.8 实现【分页查询帖子列表】API接口 | ✅ 完成 | internal/controller/post/post.go | tuhome-orchestrator:subagent:b9212f47 | 2026-04-10 20:45 | 9ac9b46 | GET /api/post/list |
 | 2.2.9 注册Post路由组 | ✅ 完成 | internal/cmd/cmd.go | tuhome-orchestrator:subagent:cd571790 | 2026-04-10 20:46 | 406b8a1 | 4个路由全部注册，POST create/delete, GET detail/list |
+| 2.2.10 实现【更新帖子】API接口 | ⬜ 待开始 | - | tuhome-backend-architect | - | - | POST /api/post/update，后端缺少此接口 |
 
 ### 2.3 前端-Post API服务层
 
@@ -79,7 +80,7 @@
 | 2.4.1 帖子列表页（分页+展示） | ✅ 完成 | frontend/src/views/post/PostList.vue | tuhome-frontend-developer | 2026-04-10 20:54 | 034cd08 | views/post/PostList.vue |
 | 2.4.2 帖子详情页 | ✅ 完成 | frontend/src/views/post/PostDetail.vue | tuhome-frontend-developer | 2026-04-10 21:00 | 27eff74 | views/post/PostDetail.vue |
 | 2.4.3 发布帖子页 | ✅ 完成 | frontend/src/views/post/PostCreate.vue | tuhome-frontend-developer | 2026-04-10 21:05 | ebc21e0 | views/post/PostCreate.vue |
-| 2.4.4 编辑帖子页 | ⬜ 待开始 | - | tuhome-frontend-developer | - | - | views/post/PostEdit.vue |
+| 2.4.4 编辑帖子页 | ✅ 完成 | frontend/src/views/post/PostEdit.vue, frontend/src/api/post.js | tuhome-frontend-developer | 2026-04-10 21:15 | aee87a8 | views/post/PostEdit.vue |
 
 ### 2.5 前端-Post路由配置
 

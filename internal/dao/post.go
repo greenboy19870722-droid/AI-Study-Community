@@ -64,6 +64,27 @@ func (p *Post) GetOne(ctx context.Context, id uint64) (*entity.Post, error) {
 	return &post, nil
 }
 
+// Update updates an existing post record.
+// It updates title, content, tags, and cover_image fields.
+// Returns the number of affected rows.
+func (p *Post) Update(ctx context.Context, req *do.PostUpdateReq) (int64, error) {
+	result, err := p.db().
+		Where("id", req.Id).
+		Where("is_deleted", 0).
+		Data(map[string]interface{}{
+			"title":        req.Title,
+			"content":      req.Content,
+			"tags":         req.Tags,
+			"cover_image":  req.CoverImage,
+			"updated_at":   gtime.Now(),
+		}).
+		Update()
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected()
+}
+
 // Delete soft-deletes a post by setting IsDeleted=1 and DeletedAt.
 // It uses soft-delete pattern based on the IsDeleted field.
 // Returns the number of affected rows.

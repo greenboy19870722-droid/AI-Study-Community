@@ -74,6 +74,17 @@ func (c *cPost) List(ctx context.Context, req *do.PostGetPageListReq) (res *do.P
 	return result, nil
 }
 
+// Update handles POST /api/post/update
+// It accepts post update parameters and updates the post via the service layer.
+func (c *cPost) Update(ctx context.Context, req *do.PostUpdateReq) (res *do.PostUpdateResp, err error) {
+	success, err := service.PostService.Update(ctx, req)
+	if err != nil {
+		g.Log().Error(ctx, err)
+		return nil, err
+	}
+	return &do.PostUpdateResp{Success: success}, nil
+}
+
 // Delete handles POST /api/post/delete
 // It accepts a post ID and soft-deletes the post via the service layer.
 func (c *cPost) Delete(ctx context.Context, req *do.PostDeleteReq) (res *do.PostDeleteResp, err error) {
@@ -91,6 +102,7 @@ func (c *cPost) RegisterRoute(s *ghttp.Server) {
 	group.Middleware(ghttp.MiddlewareHandlerResponse)
 	group.Bind(
 		c.Create,
+		c.Update,
 		c.Delete,
 		c.List,
 		c.GetDetail,
