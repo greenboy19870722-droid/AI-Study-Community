@@ -1,8 +1,20 @@
 database:
   # 数据库类型：mysql
   type: "mysql"
-  # 数据库链接配置
-  link: "root:root@tcp(localhost:3306)/ai_study_community?charset=utf8mb4&parseTime=True&loc=Local"
+  # 数据库主机地址
+  host: "127.0.0.1"
+  # 数据库端口
+  port: 3306
+  # 数据库名称
+  name: "ai_study_community"
+  # 数据库用户名
+  user: "root"
+  # 数据库密码（留空）
+  pass: ""
+  # 字符集
+  charset: "utf8mb4"
+  # 时区设置
+  timezone: "+8:00"
   # 最大连接数
   maxOpenConns: 100
   # 最大空闲连接数
@@ -15,5 +27,5 @@ database:
   showSql: true
   # 是否显示执行时间
   showExecTime: true
-  # 自动创建表（开发环境开启）
+  # 自动创建表（开发环境关闭）
   autoCreate: false
