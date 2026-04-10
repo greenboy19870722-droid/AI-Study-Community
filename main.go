@@ -3,8 +3,9 @@ package main
 import (
 	_ "AI-Study-Community/internal/packed"
 
-	"github.com/gogf/gf/v2/os/gctx"
 	"AI-Study-Community/internal/cmd"
+
+	"github.com/gogf/gf/v2/os/gctx"
 )
 
 func main() {
