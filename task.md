@@ -70,7 +70,7 @@
 
 | 任务名称 | 当前状态 | 修改文件 | 完成agentId | 完成时间 | 提交commit前8位 | 备注 |
 |---------|---------|---------|------------|---------|----------------|------|
-| 2.3.1 封装Post API调用方法 | ⬜ 待开始 | - | tuhome-frontend-developer | - | - | api/post.js封装CRUD接口 |
+| 2.3.1 封装Post API调用方法 | ✅ 完成 | frontend/src/api/post.js | tuhome-frontend-developer | 2026-04-10 20:53 | e8ef93a | api/post.js封装CRUD接口 |
 
 ### 2.4 前端-Post页面开发
 
