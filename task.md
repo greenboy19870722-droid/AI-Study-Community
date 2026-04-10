@@ -131,7 +131,7 @@
 | 任务名称 | 当前状态 | 修改文件 | 完成agentId | 完成时间 | 提交commit前8位 | 备注 |
 |---------|---------|---------|------------|---------|----------------|------|
 | 3.4.1 封装Comment API调用方法 | ✅ 完成 | frontend/src/api/comment.js | tuhome-orchestrator:subagent:fab121a5 | 2026-04-10 21:46 | 017db8c8 | api/comment.js封装5个接口方法 |
-| 3.4.2 统一错误处理和响应拦截 | ⬜ 待开始 | - | tuhome-frontend-developer | - | - | axios拦截器统一处理 |
+| 3.4.2 统一错误处理和响应拦截 | ✅ 完成 | frontend/src/api/request.js, frontend/src/main.js | tuhome-frontend-developer | 2026-04-10 22:00 | 1a4e6f63 | axios拦截器统一处理，Element Plus Message友好提示 |
 
 ### 3.5 前端-Comment组件开发
 
