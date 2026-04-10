@@ -113,12 +113,12 @@
 | 3.2.3 实现Comment业务方法-Delete | ✅ 完成 | internal/service/comment.go | tuhome-orchestrator:subagent:13c45fa9 | 2026-04-10 21:32 | d15a703 | service.Comment.Delete()含AuthorId权限校验 |
 | 3.2.4 实现Comment业务方法-GetDetail | ✅ 完成 | internal/service/comment.go | tuhome-orchestrator:subagent:13c45fa9 | 2026-04-10 21:32 | d15a703 | service.Comment.GetDetail() |
 | 3.2.5 实现Comment业务方法-GetTreeByPostId | ✅ 完成 | internal/service/comment.go | tuhome-orchestrator:subagent:13c45fa9 | 2026-04-10 21:32 | d15a703 | service.Comment.GetTreeByPostId()层级结构 |
-| 3.2.6 实现【评论帖子】API接口 | ⬜ 待开始 | - | tuhome-backend-architect | - | - | POST /api/comment/create |
-| 3.2.7 实现【回复评论】API接口 | ⬜ 待开始 | - | tuhome-backend-architect | - | - | POST /api/comment/reply |
-| 3.2.8 实现【删除评论】API接口 | ⬜ 待开始 | - | tuhome-backend-architect | - | - | POST /api/comment/delete |
-| 3.2.9 实现【查询评论详情】API接口 | ⬜ 待开始 | - | tuhome-backend-architect | - | - | GET /api/comment/detail |
-| 3.2.10 实现【分页查询帖子下评论（层级结构）】API接口 | ⬜ 待开始 | - | tuhome-backend-architect | - | - | GET /api/comment/tree |
-| 3.2.11 注册Comment路由组 | ⬜ 待开始 | - | tuhome-backend-architect | - | - | 路由分组注册 |
+| 3.2.6 实现【评论帖子】API接口 | ✅ 完成 | internal/controller/comment/comment.go | tuhome-orchestrator:subagent:13c45fa9 | 2026-04-10 21:32 | d15a703 | POST /api/comment/create |
+| 3.2.7 实现【回复评论】API接口 | ✅ 完成 | internal/controller/comment/comment.go | tuhome-orchestrator:subagent:13c45fa9 | 2026-04-10 21:32 | d15a703 | POST /api/comment/reply |
+| 3.2.8 实现【删除评论】API接口 | ✅ 完成 | internal/controller/comment/comment.go | tuhome-orchestrator:subagent:13c45fa9 | 2026-04-10 21:32 | d15a703 | POST /api/comment/delete |
+| 3.2.9 实现【查询评论详情】API接口 | ✅ 完成 | internal/controller/comment/comment.go | tuhome-orchestrator:subagent:13c45fa9 | 2026-04-10 21:32 | d15a703 | GET /api/comment/detail |
+| 3.2.10 实现【分页查询帖子下评论（层级结构）】API接口 | ✅ 完成 | internal/controller/comment/comment.go | tuhome-orchestrator:subagent:13c45fa9 | 2026-04-10 21:32 | d15a703 | GET /api/comment/tree |
+| 3.2.11 注册Comment路由组 | ✅ 完成 | internal/cmd/cmd.go | tuhome-orchestrator:subagent:13c45fa9 | 2026-04-10 21:32 | d15a703 | 路由分组注册 |
 
 ### 3.3 后端-完善main.go入口
 
