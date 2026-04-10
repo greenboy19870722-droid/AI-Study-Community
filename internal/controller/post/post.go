@@ -19,7 +19,7 @@ type cPost struct{}
 // Create handles POST /api/post/create
 // It accepts post creation parameters and returns the created post ID.
 func (c *cPost) Create(ctx context.Context, req *do.PostCreateReq) (res *do.PostCreateResp, err error) {
-	result, err := service.Post.Create(ctx, req)
+	result, err := service.PostService.Create(ctx, req)
 	if err != nil {
 		g.Log().Error(ctx, err)
 		return nil, err
@@ -30,7 +30,7 @@ func (c *cPost) Create(ctx context.Context, req *do.PostCreateReq) (res *do.Post
 // GetDetail handles GET /api/post/detail
 // It accepts a post ID parameter and returns the post details.
 func (c *cPost) GetDetail(ctx context.Context, req *do.PostGetOneReq) (res *do.PostResp, err error) {
-	result, err := service.Post.GetDetail(ctx, req.Id)
+	result, err := service.PostService.GetDetail(ctx, req.Id)
 	if err != nil {
 		g.Log().Error(ctx, err)
 		return nil, err
@@ -66,7 +66,7 @@ func (c *cPost) List(ctx context.Context, req *do.PostGetPageListReq) (res *do.P
 	if req.PageSize == 0 {
 		req.PageSize = 10
 	}
-	result, err := service.Post.GetPageList(ctx, req)
+	result, err := service.PostService.GetPageList(ctx, req)
 	if err != nil {
 		g.Log().Error(ctx, err)
 		return nil, err
@@ -77,7 +77,7 @@ func (c *cPost) List(ctx context.Context, req *do.PostGetPageListReq) (res *do.P
 // Delete handles POST /api/post/delete
 // It accepts a post ID and soft-deletes the post via the service layer.
 func (c *cPost) Delete(ctx context.Context, req *do.PostDeleteReq) (res *do.PostDeleteResp, err error) {
-	success, err := service.Post.Delete(ctx, req.Id)
+	success, err := service.PostService.Delete(ctx, req.Id)
 	if err != nil {
 		g.Log().Error(ctx, err)
 		return nil, err
