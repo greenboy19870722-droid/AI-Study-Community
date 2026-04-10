@@ -7,7 +7,6 @@ import (
 	"AI-Study-Community/internal/model/entity"
 
 	"github.com/gogf/gf/v2/database/gdb"
-	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gtime"
 )
 
@@ -65,7 +64,7 @@ func (p *Post) GetOne(ctx context.Context, id uint64) (*entity.Post, error) {
 func (p *Post) Delete(ctx context.Context, id uint64) (int64, error) {
 	result, err := p.db().Model(p.table).
 		Where("id", id).
-		Data(g.Map{
+		Data(map[string]interface{}{
 			"is_deleted": 1,
 			"deleted_at": gtime.Now(),
 		}).

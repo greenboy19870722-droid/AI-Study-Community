@@ -16,6 +16,45 @@ var (
 
 type cPost struct{}
 
+// Create handles POST /api/post/create
+// It accepts post creation parameters and calls the service layer to create a new post.
+func (c *cPost) Create(ctx context.Context, req *do.PostCreateReq) (res *do.PostCreateResp, err error) {
+	result, err := service.PostService.Create(ctx, req)
+	if err != nil {
+		g.Log().Error(ctx, err)
+		return nil, err
+	}
+	return result, nil
+}
+
+// Detail handles GET /api/post/detail
+// It accepts a post ID and returns the post details.
+func (c *cPost) Detail(ctx context.Context, req *do.PostGetOneReq) (res *do.PostResp, err error) {
+	post, err := service.PostService.GetDetail(ctx, req.Id)
+	if err != nil {
+		g.Log().Error(ctx, err)
+		return nil, err
+	}
+	if post == nil {
+		return nil, nil
+	}
+	return &do.PostResp{
+		Id:           post.Id,
+		Title:        post.Title,
+		Content:      post.Content,
+		AuthorId:     post.AuthorId,
+		Status:       post.Status,
+		ViewCount:    post.ViewCount,
+		LikeCount:    post.LikeCount,
+		CommentCount: post.CommentCount,
+		Tags:         post.Tags,
+		CoverImage:   post.CoverImage,
+		IsDeleted:    post.IsDeleted,
+		CreatedAt:    post.CreatedAt,
+		UpdatedAt:    post.UpdatedAt,
+	}, nil
+}
+
 // GetPageList handles GET /api/post/list
 // It accepts pagination parameters (page, pageSize) and returns a paginated list of posts.
 func (c *cPost) GetPageList(ctx context.Context, req *do.PostGetPageListReq) (res *do.PostListResp, err error) {
@@ -28,13 +67,18 @@ func (c *cPost) GetPageList(ctx context.Context, req *do.PostGetPageListReq) (re
 	}
 
 	// Call service layer to get paginated post list
-	result, err := service.Post.GetPageList(ctx, req)
+	result, err := service.PostService.GetPageList(ctx, req)
 	if err != nil {
 		g.Log().Error(ctx, err)
 		return nil, err
 	}
 
 	return result, nil
+}
+
+// List is an alias for GetPageList to match the route registration.
+func (c *cPost) List(ctx context.Context, req *do.PostGetPageListReq) (res *do.PostListResp, err error) {
+	return c.GetPageList(ctx, req)
 }
 
 // GetDetail handles GET /api/post/detail

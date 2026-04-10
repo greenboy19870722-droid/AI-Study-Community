@@ -1,11 +1,11 @@
 package main
 
 import (
-	_ "github.com/gogf/template-single/internal/packed"
+	_ "AI-Study-Community/internal/packed"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"
-	"github.com/gogf/template-single/internal/cmd"
+	"AI-Study-Community/internal/cmd"
 )
 
 func main() {

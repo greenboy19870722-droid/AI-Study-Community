@@ -28,6 +28,8 @@ var (
 				group.Group("/api", func(group *ghttp.RouterGroup) {
 					group.Group("/post", func(group *ghttp.RouterGroup) {
 						group.POST("/create", post.Create)
+						group.POST("/delete", post.Delete)
+						group.GET("/detail", post.GetDetail)
 						group.GET("/list", post.GetPageList)
 					})
 				})
