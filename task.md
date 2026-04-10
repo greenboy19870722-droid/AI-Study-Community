@@ -109,10 +109,10 @@
 | 任务名称 | 当前状态 | 修改文件 | 完成agentId | 完成时间 | 提交commit前8位 | 备注 |
 |---------|---------|---------|------------|---------|----------------|------|
 | 3.2.1 实现Comment业务方法-Create | ✅ 完成 | internal/service/comment.go | tuhome-orchestrator:subagent:098319ba-b3be-49a8-a598-649018c04f24 | 2026-04-10 21:25 | a722d8f | service.Comment.Create() |
-| 3.2.2 实现Comment业务方法-Reply | ⬜ 待开始 | - | tuhome-backend-architect | - | - | service.Comment.Reply()回复功能 |
-| 3.2.3 实现Comment业务方法-Delete | ⬜ 待开始 | - | tuhome-backend-architect | - | - | service.Comment.Delete() |
-| 3.2.4 实现Comment业务方法-GetDetail | ⬜ 待开始 | - | tuhome-backend-architect | - | - | service.Comment.GetDetail() |
-| 3.2.5 实现Comment业务方法-GetTreeByPostId | ⬜ 待开始 | - | tuhome-backend-architect | - | - | service.Comment.GetTreeByPostId()层级结构 |
+| 3.2.2 实现Comment业务方法-Reply | ✅ 完成 | internal/service/comment.go | tuhome-orchestrator:subagent:13c45fa9 | 2026-04-10 21:32 | d15a703 | service.Comment.Reply()回复功能 |
+| 3.2.3 实现Comment业务方法-Delete | ✅ 完成 | internal/service/comment.go | tuhome-orchestrator:subagent:13c45fa9 | 2026-04-10 21:32 | d15a703 | service.Comment.Delete()含AuthorId权限校验 |
+| 3.2.4 实现Comment业务方法-GetDetail | ✅ 完成 | internal/service/comment.go | tuhome-orchestrator:subagent:13c45fa9 | 2026-04-10 21:32 | d15a703 | service.Comment.GetDetail() |
+| 3.2.5 实现Comment业务方法-GetTreeByPostId | ✅ 完成 | internal/service/comment.go | tuhome-orchestrator:subagent:13c45fa9 | 2026-04-10 21:32 | d15a703 | service.Comment.GetTreeByPostId()层级结构 |
 | 3.2.6 实现【评论帖子】API接口 | ⬜ 待开始 | - | tuhome-backend-architect | - | - | POST /api/comment/create |
 | 3.2.7 实现【回复评论】API接口 | ⬜ 待开始 | - | tuhome-backend-architect | - | - | POST /api/comment/reply |
 | 3.2.8 实现【删除评论】API接口 | ⬜ 待开始 | - | tuhome-backend-architect | - | - | POST /api/comment/delete |
