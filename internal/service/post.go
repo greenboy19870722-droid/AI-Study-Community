@@ -5,6 +5,7 @@ import (
 
 	"AI-Study-Community/internal/dao"
 	"AI-Study-Community/internal/model/do"
+	"AI-Study-Community/internal/model/entity"
 )
 
 // Post is the service layer for posts
@@ -27,4 +28,15 @@ func (s *Post) Create(ctx context.Context, req *do.PostCreateReq) (*do.PostCreat
 	return &do.PostCreateResp{
 		Id: id,
 	}, nil
+}
+
+// Delete soft-deletes a post by ID.
+// It calls the DAO layer to perform the deletion.
+// Returns true if the deletion was successful.
+func (s *Post) Delete(ctx context.Context, id uint64) (bool, error) {
+	rowsAffected, err := dao.PostDao.Delete(ctx, id)
+	if err != nil {
+		return false, err
+	}
+	return rowsAffected > 0, nil
 }
