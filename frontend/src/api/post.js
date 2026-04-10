@@ -2,6 +2,7 @@
  * Post API - 帖子相关接口封装
  * 对应后端 API:
  * - POST /api/post/create   - 发布帖子
+ * - POST /api/post/update   - 更新帖子
  * - POST /api/post/delete   - 删除帖子
  * - GET  /api/post/detail   - 查询帖子详情
  * - GET  /api/post/list     - 分页查询帖子列表
@@ -21,6 +22,25 @@ import request from './request.js'
 export function createPost(data) {
   return request({
     url: '/api/post/create',
+    method: 'POST',
+    data,
+  })
+}
+
+/**
+ * 更新帖子
+ * @param {Object} data - 帖子数据
+ * @param {number} data.id - 帖子ID
+ * @param {string} data.title - 帖子标题
+ * @param {string} data.content - 帖子内容
+ * @param {number} data.authorId - 作者ID
+ * @param {string} [data.tags] - 标签（逗号分隔）
+ * @param {string} [data.coverImage] - 封面图片URL
+ * @returns {Promise<{id: number}>} 返回更新的帖子ID
+ */
+export function updatePost(data) {
+  return request({
+    url: '/api/post/update',
     method: 'POST',
     data,
   })
@@ -74,6 +94,7 @@ export function getPostList(params) {
 // 导出默认对象，方便按需引入
 export default {
   createPost,
+  updatePost,
   deletePost,
   getPostDetail,
   getPostList,
