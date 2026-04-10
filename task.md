@@ -64,7 +64,7 @@
 | 2.2.6 实现【删除帖子】API接口 | ✅ 完成 | internal/controller/post/post.go | tuhome-orchestrator:subagent:9f317076 | 2026-04-10 20:40 | 41d1faa1 | POST /api/post/delete |
 | 2.2.7 实现【查询帖子详情】API接口 | ⬜ 待开始 | - | tuhome-backend-architect | - | - | GET /api/post/detail |
 | 2.2.8 实现【分页查询帖子列表】API接口 | ⬜ 待开始 | - | tuhome-backend-architect | - | - | GET /api/post/list |
-| 2.2.9 注册Post路由组 | ⬜ 待开始 | - | tuhome-backend-architect | - | - | 路由分组注册 |
+| 2.2.9 注册Post路由组 | ✅ 完成 | internal/cmd/cmd.go | tuhome-orchestrator:subagent:cd571790 | 2026-04-10 20:46 | 406b8a1 | 4个路由全部注册，POST create/delete, GET detail/list |
 
 ### 2.3 前端-Post API服务层
 

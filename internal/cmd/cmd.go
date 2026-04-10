@@ -7,7 +7,6 @@ import (
 	"AI-Study-Community/internal/dao"
 
 	"github.com/gogf/gf/v2/frame/g"
-	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/os/gcmd"
 )
 
@@ -23,17 +22,7 @@ var (
 				return err
 			}
 			s := g.Server()
-			s.Group("/", func(group *ghttp.RouterGroup) {
-				group.Middleware(ghttp.MiddlewareHandlerResponse)
-				group.Group("/api", func(group *ghttp.RouterGroup) {
-					group.Group("/post", func(group *ghttp.RouterGroup) {
-						group.POST("/create", post.Create)
-						group.POST("/delete", post.Delete)
-						group.GET("/detail", post.GetDetail)
-						group.GET("/list", post.GetPageList)
-					})
-				})
-			})
+			post.Post.RegisterRoute(s)
 			s.Run()
 			return nil
 		},
