@@ -1,17 +1,19 @@
+-- ================================================================
 -- AI学习社区 - 数据库初始化脚本
--- 设计版本: v1.0
+-- 版本: v1.0
 -- 创建时间: 2026-04-10
--- 功能: 整合posts表和comments表建表语句
+-- 说明: 合并posts和comments表结构，包含完整外键约束
+-- ================================================================
 
 -- ----------------------------
--- 1. 创建数据库
+-- 创建数据库
 -- ----------------------------
 CREATE DATABASE IF NOT EXISTS `ai_study_community` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 USE `ai_study_community`;
 
 -- ----------------------------
--- 2. 帖子表 posts
+-- Table structure for posts
 -- ----------------------------
 DROP TABLE IF EXISTS `posts`;
 CREATE TABLE `posts` (
@@ -37,7 +39,7 @@ CREATE TABLE `posts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='帖子表';
 
 -- ----------------------------
--- 3. 评论表 comments (支持树形层级)
+-- Table structure for comments
 -- ----------------------------
 DROP TABLE IF EXISTS `comments`;
 CREATE TABLE `comments` (
@@ -61,6 +63,12 @@ CREATE TABLE `comments` (
   KEY `idx_created_at` (`created_at`),
   KEY `idx_status` (`status`),
   KEY `idx_is_deleted` (`is_deleted`),
-  CONSTRAINT `fk_comments_parent` FOREIGN KEY (`parent_id`) REFERENCES `comments` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `fk_comments_post` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_comments_post` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_comments_parent` FOREIGN KEY (`parent_id`) REFERENCES `comments` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='评论表(支持树形层级)';
+
+-- ================================================================
+-- 外键约束说明:
+-- fk_comments_post: 评论→帖子，级联删除/更新
+-- fk_comments_parent: 子评论→父评论，置空父评论/级联更新
+-- ================================================================
