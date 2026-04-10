@@ -47,17 +47,32 @@ func (p *Post) Insert(ctx context.Context, req *do.PostCreateReq) (uint64, error
 	return uint64(id), nil
 }
 
+// GetOne queries a single post record by ID.
+// It returns the post entity or nil if not found.
+func (p *Post) GetOne(ctx context.Context, id uint64) (*entity.Post, error) {
+	var post *entity.Post
+	err := p.db().Where("id", id).Scan(&post)
+	if err != nil {
+		return nil, err
+	}
+	return post, nil
+}
+
 // Delete soft-deletes a post by setting IsDeleted=1 and DeletedAt.
 // It uses soft-delete pattern based on the IsDeleted field.
-func (p *Post) Delete(ctx context.Context, req *do.PostDeleteReq) error {
-	_, err := p.db().Model(p.table).
-		Where("id", req.Id).
+// Returns the number of affected rows.
+func (p *Post) Delete(ctx context.Context, id uint64) (int64, error) {
+	result, err := p.db().Model(p.table).
+		Where("id", id).
 		Data(g.Map{
 			"is_deleted": 1,
-			"deleted_at":  gtime.Now(),
+			"deleted_at": gtime.Now(),
 		}).
 		Update()
-	return err
+	if err != nil {
+		return 0, err
+	}
+	return result.RowsAffected()
 }
 
 // db returns the underlying database model for further operations
