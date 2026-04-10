@@ -74,12 +74,24 @@ func (c *cPost) List(ctx context.Context, req *do.PostGetPageListReq) (res *do.P
 	return result, nil
 }
 
+// Delete handles POST /api/post/delete
+// It accepts a post ID and soft-deletes the post via the service layer.
+func (c *cPost) Delete(ctx context.Context, req *do.PostDeleteReq) (res *do.PostDeleteResp, err error) {
+	success, err := service.Post.Delete(ctx, req.Id)
+	if err != nil {
+		g.Log().Error(ctx, err)
+		return nil, err
+	}
+	return &do.PostDeleteResp{Success: success}, nil
+}
+
 // RegisterRoute registers the post controller routes.
 func (c *cPost) RegisterRoute(s *ghttp.Server) {
 	group := s.Group("/api/post")
 	group.Middleware(ghttp.MiddlewareHandlerResponse)
 	group.Bind(
 		c.Create,
+		c.Delete,
 		c.List,
 		c.GetDetail,
 	)
