@@ -46,8 +46,8 @@
 |---------|---------|---------|------------|---------|----------------|------|
 | 2.1.1 创建Post模型定义 | ✅ 完成 | internal/model/entity/post.go | tuhome-backend-architect | 2026-04-10 20:22 | 20a9a5a | gmodel.Post实体 |
 | 2.1.2 创建Post新增/删除/查询输入输出结构体 | ✅ 完成 | internal/model/do/post_do.go | tuhome-backend-architect | 2026-04-10 20:24 | 73bea33 | Do CreateReq/Do DeleteReq/Do GetOneReq等 |
-| 2.1.3 创建Post数据访问方法-Insert | ⬜ 待开始 | - | tuhome-backend-architect | - | - | dao.Post.Insert() |
-| 2.1.4 创建Post数据访问方法-Delete | ⬜ 待开始 | - | tuhome-backend-architect | - | - | dao.Post.Delete() |
+| 2.1.3 创建Post数据访问方法-Insert | ✅ 完成 | internal/dao/post.go | tuhome-backend-architect | 2026-04-10 20:26 | fa0ab9e | dao.Post.Insert() |
+| 2.1.4 创建Post数据访问方法-Delete | ✅ 完成 | internal/dao/post.go | tuhome-backend-architect | 2026-04-10 20:28 | 378d57c | dao.Post.Delete() |
 | 2.1.5 创建Post数据访问方法-GetOne | ⬜ 待开始 | - | tuhome-backend-architect | - | - | dao.Post.GetOne() |
 | 2.1.6 创建Post数据访问方法-GetList | ⬜ 待开始 | - | tuhome-backend-architect | - | - | dao.Post.GetList()分页查询 |
 
