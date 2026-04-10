@@ -75,6 +75,59 @@ func (p *Post) Delete(ctx context.Context, id uint64) (int64, error) {
 	return result.RowsAffected()
 }
 
+// GetList retrieves a paginated list of posts with optional filters.
+// It supports filtering by authorId, tags, status, and keyword search.
+// Returns the post list, total count, and any error encountered.
+func (p *Post) GetList(ctx context.Context, req *do.PostGetListReq) ([]*entity.Post, int, error) {
+	m := p.db()
+
+	// Apply soft-delete filter (only show non-deleted posts)
+	m = m.Where("is_deleted", 0)
+
+	// Apply filters
+	if req.AuthorId > 0 {
+		m = m.Where("author_id", req.AuthorId)
+	}
+	if req.Tags != "" {
+		m = m.Where("tags", req.Tags)
+	}
+	if req.Status != nil {
+		m = m.Where("status", *req.Status)
+	}
+	if req.Keyword != "" {
+		m = m.WhereLike("title", "%"+req.Keyword+"%").
+			OrWhereLike("content", "%"+req.Keyword+"%")
+	}
+
+	// Count total records
+	total, err := m.Count(ctx)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	// Calculate offset with defaults
+	page := req.Page
+	if page < 1 {
+		page = 1
+	}
+	pageSize := req.PageSize
+	if pageSize < 1 {
+		pageSize = 10
+	}
+	offset := (page - 1) * pageSize
+
+	// Fetch paginated results ordered by created_at DESC
+	list, err := m.Order("created_at DESC").
+		Offset(offset).
+		Limit(pageSize).
+		Select(ctx)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	return list, total, nil
+}
+
 // db returns the underlying database model for further operations
 func (p *Post) db() *gdb.Model {
 	return Database.Model(p.table)
