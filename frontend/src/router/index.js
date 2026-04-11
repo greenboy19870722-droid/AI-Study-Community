@@ -1,10 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import PostList from '../views/post/PostList.vue'
-import PostDetail from '../views/post/PostDetail.vue'
-import PostCreate from '../views/post/PostCreate.vue'
-import PostEdit from '../views/post/PostEdit.vue'
 import { isLoggedIn } from '../utils/auth.js'
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -14,28 +9,41 @@ const router = createRouter({
       redirect: '/post/list'
     },
     {
-      path: '/post/list',
-      name: 'PostList',
-      component: PostList,
-      meta: { title: '帖子列表' }
+      path: '/post',
+      name: 'post',
+      component: import('@/views/Post.vue'),
+      children: [
+        {
+          path: '/post/list',
+          name: 'PostList',
+          component: import('@/views/post/PostList.vue'),
+          meta: { title: '帖子列表' }
+        },
+        {
+          path: '/post/detail/:id',
+          name: 'PostDetail',
+          component: import('@/views/post/PostDetail.vue'),
+          meta: { title: '帖子详情', requiresComment: true }
+        },
+        {
+          path: '/post/create',
+          name: 'PostCreate',
+          component: import('@/views/post/PostCreate.vue'),
+          meta: { title: '发布帖子', requiresAuth: true }
+        },
+        {
+          path: '/post/edit/:id',
+          name: 'PostEdit',
+          component: import('@/views/post/PostEdit.vue'),
+          meta: { title: '编辑帖子', requiresAuth: true }
+        },
+      ]
     },
     {
-      path: '/post/detail/:id',
-      name: 'PostDetail',
-      component: PostDetail,
-      meta: { title: '帖子详情', requiresComment: true }
-    },
-    {
-      path: '/post/create',
-      name: 'PostCreate',
-      component: PostCreate,
-      meta: { title: '发布帖子', requiresAuth: true }
-    },
-    {
-      path: '/post/edit/:id',
+      path: '/login',
       name: 'PostEdit',
-      component: PostEdit,
-      meta: { title: '编辑帖子', requiresAuth: true }
+      component: import('@/views/Login.vue'),
+      meta: { title: '登录', requiresAuth: false }
     }
   ]
 })

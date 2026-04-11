@@ -97,7 +97,8 @@ onMounted(() => {
   <div class="post-list-container">
     <!-- 页面头部 -->
     <div class="page-header">
-      <h1 class="page-title">帖子列表</h1>
+      <el-text class="mx-1" size="large">帖子列表</el-text>
+
       <el-button type="primary" @click="goToCreate">
         <span class="btn-icon">+</span> 发布帖子
       </el-button>

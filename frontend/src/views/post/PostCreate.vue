@@ -92,7 +92,7 @@ const goBack = () => {
     <!-- 页面头部 -->
     <div class="page-header">
       <el-button @click="goBack"> <span>&larr;</span> 返回列表 </el-button>
-      <h1 class="page-title">发布帖子</h1>
+      <el-text size="large" tag="b">发布帖子</el-text>
     </div>
 
     <!-- 发布表单 -->

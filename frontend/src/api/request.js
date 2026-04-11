@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElLoading } from 'element-plus'
 
 // 创建 axios 实例
 const request = axios.create({
@@ -13,10 +13,31 @@ const request = axios.create({
     'Content-Type': 'application/json',
   },
 })
+let loadingInstance = null;
+let loadingCount = 0;
+
+const showLoading = () => {
+  if (loadingCount === 0) {
+    loadingInstance = ElLoading.service({
+      lock: true, // 锁定屏幕
+      text: '加载中...', // 加载文字
+      spinner: 'el-icon-loading', // 加载图标
+    })
+  }
+  loadingCount++
+}
+const hideLoading = () => {
+  loadingCount--
+  if (loadingCount <= 0 && loadingInstance) {
+    loadingInstance?.close()
+    loadingInstance = null
+  }
+}
 
 // 请求拦截器
 request.interceptors.request.use(
   (config) => {
+    showLoading();
     // 添加 token 等认证信息
     const token = localStorage.getItem('token')
     if (token) {
@@ -27,6 +48,7 @@ request.interceptors.request.use(
     return config
   },
   (error) => {
+    hideLoading();
     ElMessage.error('请求配置错误')
     return Promise.reject(error)
   }
@@ -35,19 +57,21 @@ request.interceptors.request.use(
 // 响应拦截器
 request.interceptors.response.use(
   (response) => {
+    hideLoading();
     const res = response.data
     const { code, message, data } = res
-    
+
     // 根据业务状态码处理
     if (code === 0 || code === 200) {
       return data
     }
-    
+
     // 其他业务错误
     ElMessage.error(message || '请求失败')
     return Promise.reject(new Error(message || 'Request failed'))
   },
   (error) => {
+    hideLoading();
     // HTTP 错误处理
     if (error.response) {
       const { status, data } = error.response
@@ -90,7 +114,7 @@ request.interceptors.response.use(
 
 // 生成 UUID
 function generateUUID() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     const r = Math.random() * 16 | 0
     const v = c === 'x' ? r : (r & 0x3 | 0x8)
     return v.toString(16)
