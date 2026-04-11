@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 import { getPostList } from "@/api/post.js";
 import { ElMessage } from "element-plus";
-
+import router from "@/router";
 // 帖子列表数据
 const postList = ref([]);
 const total = ref(0);
@@ -79,12 +79,12 @@ const handleSizeChange = (newSize) => {
 
 // 跳转到帖子详情
 const goToDetail = (postId) => {
-  window.location.href = `/post/detail/${postId}`;
+  router.push(`/post/detail/${postId}`);
 };
 
 // 跳转到发布帖子页
 const goToCreate = () => {
-  window.location.href = "/post/create";
+  router.push("/post/create");
 };
 
 // 组件挂载时加载数据

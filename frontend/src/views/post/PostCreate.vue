@@ -10,7 +10,7 @@ const router = useRouter();
 const form = ref({
   title: "",
   content: "",
-  authorId: 1,
+  authorId: localStorage.getItem("authorId", id),
   tags: "",
   coverImage: "",
 });
@@ -30,7 +30,6 @@ const formRules = {
     { required: true, message: "请输入帖子内容", trigger: "blur" },
     { min: 10, message: "内容至少 10 个字符", trigger: "blur" },
   ],
-  authorId: [{ required: true, message: "请输入作者ID", trigger: "blur" }],
 };
 
 // 表单引用
@@ -156,15 +155,6 @@ const goBack = () => {
               </template>
             </el-image>
           </div>
-        </el-form-item>
-
-        <!-- 作者ID -->
-        <el-form-item label="作者ID" prop="authorId">
-          <el-input-number
-            v-model="form.authorId"
-            :min="1"
-            controls-position="right"
-          />
         </el-form-item>
 
         <!-- 按钮组 -->

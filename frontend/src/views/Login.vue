@@ -15,12 +15,7 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button
-            type="primary"
-            class="login-btn"
-            @click="handleLogin"
-            loading="loading"
-          >
+          <el-button type="primary" class="login-btn" @click="handleLogin">
             登 录
           </el-button>
         </el-form-item>
@@ -33,7 +28,7 @@
 import { ref } from "vue";
 import { ElMessage } from "element-plus";
 import router from "@/router";
-import request from "@/api/request.js";
+import { addUser } from "@/api/user";
 // 表单数据
 const form = ref({
   username: "",
@@ -45,12 +40,10 @@ const rules = {
 };
 
 const handleLogin = async () => {
-  const result = await request("/xxx");
+  const { id } = await addUser(form.value.username);
+  localStorage.setItem("authorId", id);
+  localStorage.setItem("username", form.value.username);
   ElMessage.success("登录成功！");
-  // setTimeout(() => {
-  //   loading.value = false;
-  //   ElMessage.success("登录成功！");
-  // }, 1000);
   router.back();
 };
 </script>

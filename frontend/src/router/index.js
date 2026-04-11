@@ -62,8 +62,8 @@ router.beforeEach((to, from, next) => {
     console.warn('[Route Guard] 此操作需要登录')
     alert('请先登录后再进行操作')
     // 暂时允许继续，但评论功能会检查登录状态
-    next()
-    return
+
+    return next(false)
   }
 
   next()
