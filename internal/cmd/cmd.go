@@ -5,6 +5,7 @@ import (
 
 	"AI-Study-Community/internal/controller/comment"
 	"AI-Study-Community/internal/controller/post"
+	"AI-Study-Community/internal/controller/user"
 	"AI-Study-Community/internal/dao"
 
 	"github.com/gogf/gf/v2/frame/g"
@@ -39,6 +40,8 @@ var (
 			// Handler response middleware for unified response format
 			s.Use(ghttp.MiddlewareHandlerResponse)
 
+			user.User.RegisterRoute(s)
+			
 			// Register Post routes (/api/post/*)
 			post.Post.RegisterRoute(s)
 
