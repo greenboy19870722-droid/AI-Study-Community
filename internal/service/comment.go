@@ -202,9 +202,9 @@ func (s *Comment) GetTreeByPostId(ctx context.Context, req *do.CommentGetTreeReq
 	}
 
 	// Flatten list (all comments)
-	flatList := make([]*do.CommentResp, 0, len(commentMap))
-	for _, resp := range commentMap {
-		flatList = append(flatList, resp)
+	flatList := make([]*do.CommentResp, 0, len(topLevelComments))
+	for _, c := range topLevelComments {
+		flatList = append(flatList, commentMap[c.Id])
 	}
 
 	return &do.CommentTreeResp{

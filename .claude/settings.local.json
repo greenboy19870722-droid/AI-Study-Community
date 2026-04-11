@@ -3,7 +3,8 @@
     "allow": [
       "Bash(netstat -ano)",
       "Bash(findstr :8000)",
-      "Bash(tasklist:*)"
+      "Bash(tasklist:*)",
+      "Bash(cp:*)"
     ]
   }
 }

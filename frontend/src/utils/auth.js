@@ -10,9 +10,11 @@
  */
 export function getCurrentUser() {
   try {
-    const userStr = localStorage.getItem('username')
-    if (!userStr) return null
-    return userStr
+    const username = localStorage.getItem('username')
+    const id = localStorage.getItem('authorId')
+    return {
+      id, username
+    }
   } catch {
     return null
   }
@@ -23,7 +25,8 @@ export function getCurrentUser() {
  * @returns {number|null}
  */
 export function getCurrentUserId() {
-  return getCurrentUser()
+  const user = getCurrentUser();
+  return user.id;
 }
 
 /**

@@ -131,9 +131,6 @@ const handleReply = (comment) => {
     id: comment.id,
     authorName: comment.authorName || `用户${comment.authorId}`,
   };
-  document
-    .querySelector(".comment-input-area")
-    ?.scrollIntoView({ behavior: "smooth" });
 };
 
 // 取消回复
@@ -312,18 +309,12 @@ onMounted(() => {
       </template>
 
       <!-- 评论输入区 -->
-      <div class="comment-input-area">
-        <!-- 回复提示 -->
-        <div v-if="replyingTo" class="reply-hint">
-          <span>回复 @{{ replyingTo.authorName }}：</span>
-          <el-button size="small" @click="cancelReply">取消回复</el-button>
-        </div>
-
+      <div class="comment-input-area" v-if="!replyingTo">
         <!-- 输入框 -->
         <el-input
           v-model="commentContent"
           type="textarea"
-          :placeholder="replyingTo ? '写下你的回复...' : '写下你的评论...'"
+          :placeholder="'写下你的评论...'"
           :rows="3"
           :disabled="commentSubmitting"
         />
@@ -335,10 +326,7 @@ onMounted(() => {
             :loading="commentSubmitting"
             :disabled="!commentContent.trim()"
             @click="replyingTo ? submitReply() : submitComment()"
-          >
-            {{
-              commentSubmitting ? "提交中..." : replyingTo ? "回复" : "发表评论"
-            }}
+            >发表评论
           </el-button>
         </div>
       </div>
@@ -370,9 +358,46 @@ onMounted(() => {
               </div>
               <div class="comment-body">{{ comment.content }}</div>
               <div class="comment-actions-row">
-                <el-button size="small" @click="handleReply(comment)"
+                <div
+                  v-if="replyingTo && comment.id === replyingTo.id"
+                  class="reply-hint"
+                >
+                  <div></div>
+                  <p>回复 @{{ replyingTo.authorName }}：</p>
+                  <div class="comment-input-area">
+                    <!-- 输入框 -->
+                    <el-input
+                      v-model="commentContent"
+                      type="textarea"
+                      :placeholder="'写下你的回复...'"
+                      :rows="3"
+                      :disabled="commentSubmitting"
+                    />
+
+                    <!-- 提交按钮 -->
+                    <div class="comment-actions">
+                      <el-button @click="cancelReply">取消回复</el-button>
+                      <el-button
+                        type="primary"
+                        :loading="commentSubmitting"
+                        :disabled="!commentContent.trim()"
+                        @click="replyingTo ? submitReply() : submitComment()"
+                      >
+                        {{
+                          commentSubmitting
+                            ? "提交中..."
+                            : replyingTo
+                            ? "回复"
+                            : "发表评论"
+                        }}
+                      </el-button>
+                    </div>
+                  </div>
+                </div>
+                <el-button v-else size="small" @click="handleReply(comment)"
                   >回复</el-button
                 >
+
                 <el-button
                   v-if="loggedIn() && currentUserId() === comment.authorId"
                   size="small"
@@ -408,9 +433,6 @@ onMounted(() => {
                 </div>
                 <div class="comment-body">{{ child.content }}</div>
                 <div class="comment-actions-row">
-                  <el-button size="small" @click="handleReply(child)"
-                    >回复</el-button
-                  >
                   <el-button
                     v-if="loggedIn() && currentUserId() === child.authorId"
                     size="small"
@@ -562,11 +584,14 @@ onMounted(() => {
 
 .comment-input-area {
   margin-bottom: 24px;
+  width: 100%;
 }
 
 .reply-hint {
+  width: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 12px;
   margin-bottom: 12px;
   padding: 8px 12px;

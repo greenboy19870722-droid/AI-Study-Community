@@ -67,14 +67,17 @@
 <script setup>
 import { useDark, useToggle } from "@vueuse/core";
 import { computed } from "vue";
+import { useRouter } from "vue-router";
+import { getCurrentUser, getCurrentUserId } from "../utils/auth";
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
-const isLoggedIn = computed(() => !!localStorage.getItem("username"));
-const username = computed(() => localStorage.getItem("username") || "用户");
+const isLoggedIn = computed(() => !!getCurrentUserId());
+const username = computed(() => getCurrentUser().username || "用户");
+const router = useRouter();
 const handleLogout = () => {
   localStorage.removeItem("username");
-  window.location.reload();
+  router.push("/post/list");
 };
 </script>
 

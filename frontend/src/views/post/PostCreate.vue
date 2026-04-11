@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { createPost } from "@/api/post.js";
 import { ElMessage } from "element-plus";
+import { getCurrentUserId } from "../../utils/auth";
 
 const router = useRouter();
 
@@ -10,7 +11,7 @@ const router = useRouter();
 const form = ref({
   title: "",
   content: "",
-  authorId: localStorage.getItem("authorId", id),
+  authorId: getCurrentUserId(),
   tags: "",
   coverImage: "",
 });

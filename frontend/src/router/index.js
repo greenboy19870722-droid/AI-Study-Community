@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { isLoggedIn } from '../utils/auth.js'
+import { getCurrentUserId, isLoggedIn } from '../utils/auth.js'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -14,25 +14,25 @@ const router = createRouter({
       component: import('@/views/Post.vue'),
       children: [
         {
-          path: '/post/list',
+          path: 'list',
           name: 'PostList',
           component: import('@/views/post/PostList.vue'),
           meta: { title: '帖子列表' }
         },
         {
-          path: '/post/detail/:id',
+          path: 'detail/:id',
           name: 'PostDetail',
           component: import('@/views/post/PostDetail.vue'),
           meta: { title: '帖子详情', requiresComment: true }
         },
         {
-          path: '/post/create',
+          path: 'create',
           name: 'PostCreate',
           component: import('@/views/post/PostCreate.vue'),
           meta: { title: '发布帖子', requiresAuth: true }
         },
         {
-          path: '/post/edit/:id',
+          path: 'edit/:id',
           name: 'PostEdit',
           component: import('@/views/post/PostEdit.vue'),
           meta: { title: '编辑帖子', requiresAuth: true }
@@ -41,7 +41,7 @@ const router = createRouter({
     },
     {
       path: '/login',
-      name: 'PostEdit',
+      name: 'Login',
       component: import('@/views/Login.vue'),
       meta: { title: '登录', requiresAuth: false }
     }
@@ -84,7 +84,9 @@ export function checkCommentDeletePermission(authorId) {
     alert('请先登录后再操作')
     return false
   }
-  const currentUserId = parseInt(localStorage.getItem('auth_user') ? JSON.parse(localStorage.getItem('auth_user')).id : 0)
+
+  const currentUserId = getCurrentUserId();
+
   if (currentUserId !== authorId) {
     alert('只能删除自己的评论')
     return false
