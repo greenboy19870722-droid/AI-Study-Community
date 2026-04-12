@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"context"
+	"time"
 
 	"AI-Study-Community/internal/controller/comment"
 	"AI-Study-Community/internal/controller/post"
@@ -11,6 +12,7 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/os/gcmd"
+	"github.com/gogf/gf/v2/os/gsession"
 )
 
 var (
@@ -33,6 +35,10 @@ var (
 			s.SetServerRoot("")
 			s.SetOpenApiPath("/api.json")
 			s.SetSwaggerPath("/swagger")
+
+			s.SetSessionCookieOutput(true)
+			s.SetSessionMaxAge(time.Hour * 24)
+			s.SetSessionStorage(gsession.NewStorageMemory())
 
 			// Add global middleware
 			// CORS middleware for cross-origin API access

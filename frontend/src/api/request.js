@@ -12,6 +12,7 @@ const request = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true
 })
 let loadingInstance = null;
 let loadingCount = 0;

@@ -22,6 +22,12 @@ func (c *cUser) Create(ctx context.Context, req *do.UserReq) (res *do.UserResp, 
 		g.Log().Error(ctx, err)
 		return nil, err
 	}
+
+	r := ghttp.RequestFromCtx(ctx)
+
+	session := r.Session
+
+
 	return result, nil
 }
 

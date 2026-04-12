@@ -2,7 +2,8 @@ package post
 
 import (
 	"context"
-
+	"errors"
+    "AI-Study-Community/internal/consts"
 	"AI-Study-Community/internal/model/do"
 	"AI-Study-Community/internal/service"
 
@@ -88,7 +89,15 @@ func (c *cPost) Update(ctx context.Context, req *do.PostUpdateReq) (res *do.Post
 // Delete handles POST /api/post/delete
 // It accepts a post ID and soft-deletes the post via the service layer.
 func (c *cPost) Delete(ctx context.Context, req *do.PostDeleteReq) (res *do.PostDeleteResp, err error) {
-	success, err := service.PostService.Delete(ctx, req.Id)
+	
+	r := ghttp.RequestFromCtx(ctx)
+	currentUserId := consts.GetCurrentUserId(r)
+	if currentUserId == 0 {
+		return nil, errors.New("not logged in")
+	}
+	
+	
+	success, err := service.PostService.Delete(ctx, req.Id,currentUserId)
 	if err != nil {
 		g.Log().Error(ctx, err)
 		return nil, err

@@ -2,7 +2,6 @@ package dao
 
 import (
 	"context"
-
 	"AI-Study-Community/internal/model/do"
 	"AI-Study-Community/internal/model/entity"
 
@@ -22,8 +21,6 @@ func (p *User) Insert(ctx context.Context, req *do.UserReq) (uint64, error) {
 	user := entity.User{
 		Username:      req.Username,
 	}
-
-
 
 	result, err := p.db().Data(user).Insert()
 	if err != nil {

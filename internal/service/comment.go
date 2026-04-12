@@ -7,6 +7,8 @@ import (
 	"AI-Study-Community/internal/dao"
 	"AI-Study-Community/internal/model/do"
 	"AI-Study-Community/internal/model/entity"
+
+	"github.com/gogf/gf/v2/frame/g"
 )
 
 // Custom errors for Comment service
@@ -73,9 +75,8 @@ func (s *Comment) Reply(ctx context.Context, req *do.CommentReplyReq) (*do.Comme
 // Delete soft-deletes a comment.
 // It validates the comment exists and belongs to the current user.
 // Returns success flag.
-func (s *Comment) Delete(ctx context.Context, req *do.CommentDeleteReq) (*do.CommentDeleteResp, error) {
-	// Check if comment exists
-	comment, err := dao.CommentDao.GetOne(ctx, req.Id)
+func (s *Comment) Delete(ctx context.Context, commentId, currentUserId uint64) (*do.CommentDeleteResp, error) {
+	comment, err := dao.CommentDao.GetOne(ctx, commentId)
 	if err != nil {
 		return nil, err
 	}
@@ -83,13 +84,11 @@ func (s *Comment) Delete(ctx context.Context, req *do.CommentDeleteReq) (*do.Com
 		return nil, ErrCommentNotFound
 	}
 
-	// Check if comment belongs to the current user
-	if comment.AuthorId != req.AuthorId {
+	if comment.AuthorId != currentUserId {
 		return nil, ErrCommentNotOwned
 	}
 
-	// Delete the comment
-	_, err = dao.CommentDao.Delete(ctx, req.Id)
+	_, err = dao.CommentDao.Delete(ctx, commentId)
 	if err != nil {
 		return nil, err
 	}

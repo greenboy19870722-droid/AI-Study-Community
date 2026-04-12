@@ -4,7 +4,12 @@
       "Bash(netstat -ano)",
       "Bash(findstr :8000)",
       "Bash(tasklist:*)",
-      "Bash(cp:*)"
+      "Bash(cp:*)",
+      "Bash(go build:*)",
+      "WebSearch",
+      "Read(//d D:/work/claw-ays/**)",
+      "Bash(go doc:*)",
+      "Bash(go list:*)"
     ]
   }
 }

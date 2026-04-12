@@ -2,10 +2,13 @@ package service
 
 import (
 	"context"
+	"errors"
 
 	"AI-Study-Community/internal/dao"
 	"AI-Study-Community/internal/model/do"
 	"AI-Study-Community/internal/model/entity"
+
+	"github.com/gogf/gf/v2/frame/g"
 )
 
 // Post is the service layer for posts
@@ -14,6 +17,9 @@ type Post struct {
 
 // PostService is the singleton instance of Post service
 var PostService = &Post{}
+
+// ErrPostNotOwned is returned when a user tries to modify a post they don't own
+var ErrPostNotOwned = errors.New("post not owned by user")
 
 // Create creates a new post.
 // It validates the input and calls the DAO layer to insert the post.
@@ -51,7 +57,19 @@ func (s *Post) Update(ctx context.Context, req *do.PostUpdateReq) (bool, error) 
 // Delete soft-deletes a post by ID.
 // It calls the DAO layer to perform the deletion.
 // Returns true if the deletion was successful.
-func (s *Post) Delete(ctx context.Context, id uint64) (bool, error) {
+func (s *Post) Delete(ctx context.Context, id uint64,currentUserId uint64) (bool, error) {
+
+
+	post, err := dao.PostDao.GetOne(ctx, id)
+	if err != nil {
+		return false, err
+	}
+
+	if post.AuthorId != currentUserId {
+		g.Log().Errorf(ctx, "Delete post permission denied: post.AuthorId=%d, currentUserId=%d", post.AuthorId, currentUserId)
+		return false, ErrPostNotOwned
+	}	
+
 	rowsAffected, err := dao.PostDao.Delete(ctx, id)
 	if err != nil {
 		return false, err

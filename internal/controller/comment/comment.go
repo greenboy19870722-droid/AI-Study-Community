@@ -2,7 +2,9 @@ package comment
 
 import (
 	"context"
+	"errors"
 
+	"AI-Study-Community/internal/consts"
 	"AI-Study-Community/internal/model/do"
 	"AI-Study-Community/internal/service"
 
@@ -41,7 +43,13 @@ func (c *cComment) Reply(ctx context.Context, req *do.CommentReplyReq) (res *do.
 // Delete handles POST /api/comment/delete
 // It accepts a comment ID and soft-deletes the comment via the service layer.
 func (c *cComment) Delete(ctx context.Context, req *do.CommentDeleteReq) (res *do.CommentDeleteResp, err error) {
-	result, err := service.CommentService.Delete(ctx, req)
+	r := ghttp.RequestFromCtx(ctx)
+	currentUserId := consts.GetCurrentUserId(r)
+	if currentUserId == 0 {
+		return nil, errors.New("not logged in")
+	}
+
+	result, err := service.CommentService.Delete(ctx, req.Id, currentUserId)
 	if err != nil {
 		g.Log().Error(ctx, err)
 		return nil, err

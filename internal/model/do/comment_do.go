@@ -15,8 +15,7 @@ type CommentCreateReq struct {
 
 // CommentDeleteReq delete comment request
 type CommentDeleteReq struct {
-	Id       uint64 `json:"id" v:"required"`
-	AuthorId uint64 `json:"authorId" v:"required"`
+	Id uint64 `json:"id" v:"required"`
 }
 
 // CommentDeleteResp delete comment response
