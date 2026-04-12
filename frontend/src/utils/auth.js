@@ -26,6 +26,7 @@ export function getCurrentUser() {
  */
 export function getCurrentUserId() {
   const user = getCurrentUser();
+
   return user.id;
 }
 
