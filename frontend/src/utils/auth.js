@@ -13,7 +13,7 @@ export function getCurrentUser() {
     const username = localStorage.getItem('username')
     const id = localStorage.getItem('authorId')
     return {
-      id, username
+      id: id - 0, username
     }
   } catch {
     return null

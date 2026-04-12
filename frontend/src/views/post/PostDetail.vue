@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { getPostDetail } from "@/api/post.js";
 import { getCommentTree, createComment, deleteComment } from "@/api/comment.js";
@@ -49,6 +49,10 @@ const getStatusType = (status) => {
 // 当前登录用户
 const currentUserId = () => getCurrentUserId();
 const loggedIn = () => isLoggedIn();
+
+const canDelete = computed(() => {
+  return post.value.authorId == currentUserId();
+});
 
 // 加载帖子详情
 const loadPostDetail = async () => {
@@ -212,6 +216,13 @@ const goToEdit = () => {
   router.push(`/post/edit/${post.value.id}`);
 };
 
+const deletePost = async () => {
+  await deletePost(post.value.id);
+  ElMessage.success("删除成功");
+
+  router.push("/post/list");
+};
+
 onMounted(() => {
   loadPostDetail();
   loadComments();
@@ -285,7 +296,8 @@ onMounted(() => {
         <!-- 帖子底部 -->
         <div class="post-footer">
           <el-button type="primary" plain>
-            <span class="btn-icon">♥</span> 点赞
+            <span class="btn-icon" v-if="!canDelete">♥ 点赞</span>
+            <span v-else @click="deletePost">删除</span>
           </el-button>
           <el-button type="info" plain>分享</el-button>
         </div>
@@ -347,7 +359,20 @@ onMounted(() => {
             :key="comment.id"
             class="comment-item"
           >
-            <div class="comment-main">
+            <div
+              class="comment-main"
+              @mouseenter="comment.hover = true"
+              @mouseleave="comment.hover = false"
+            >
+              <el-button
+                v-if="currentUserId() == comment.authorId && comment.hover"
+                type="danger"
+                size="small"
+                class="del-btn"
+                plain
+                @click="handleDeleteComment(comment)"
+                >删除</el-button
+              >
               <div class="comment-author">
                 <span class="author-name">{{
                   comment.authorName || `用户${comment.authorId}`
@@ -397,16 +422,6 @@ onMounted(() => {
                 <el-button v-else size="small" @click="handleReply(comment)"
                   >回复</el-button
                 >
-
-                <el-button
-                  v-if="loggedIn() && currentUserId() === comment.authorId"
-                  size="small"
-                  type="danger"
-                  plain
-                  @click="handleDeleteComment(comment)"
-                >
-                  删除
-                </el-button>
               </div>
             </div>
 
@@ -416,7 +431,18 @@ onMounted(() => {
                 v-for="child in comment.children"
                 :key="child.id"
                 class="comment-child"
+                @mouseenter="child.hover = true"
+                @mouseleave="child.hover = false"
               >
+                <el-button
+                  v-if="currentUserId() == child.authorId && child.hover"
+                  type="danger"
+                  size="small"
+                  class="del-btn"
+                  plain
+                  @click="handleDeleteComment(child)"
+                  >删除</el-button
+                >
                 <div class="child-author">
                   <span class="author-name">{{
                     child.authorName || `用户${child.authorId}`
@@ -432,17 +458,6 @@ onMounted(() => {
                   }}</span>
                 </div>
                 <div class="comment-body">{{ child.content }}</div>
-                <div class="comment-actions-row">
-                  <el-button
-                    v-if="loggedIn() && currentUserId() === child.authorId"
-                    size="small"
-                    type="danger"
-                    plain
-                    @click="handleDeleteComment(child)"
-                  >
-                    删除
-                  </el-button>
-                </div>
               </div>
             </div>
           </div>
@@ -634,6 +649,7 @@ onMounted(() => {
 
 .comment-main {
   margin-bottom: 12px;
+  position: relative;
 }
 
 .comment-author {
@@ -682,6 +698,7 @@ onMounted(() => {
   padding: 12px;
   background: var(--social-bg);
   border-radius: 6px;
+  position: relative;
 }
 
 .child-author {
@@ -708,5 +725,19 @@ onMounted(() => {
   margin-top: 24px;
   padding-top: 16px;
   border-top: 1px solid var(--border);
+}
+
+.del-btn {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.comment-child:hover .del-btn,
+.comment-list:hover .del-btn {
+  opacity: 1;
 }
 </style>
