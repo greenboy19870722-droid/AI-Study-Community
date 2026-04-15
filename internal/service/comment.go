@@ -8,7 +8,6 @@ import (
 	"AI-Study-Community/internal/model/do"
 	"AI-Study-Community/internal/model/entity"
 
-	"github.com/gogf/gf/v2/frame/g"
 )
 
 // Custom errors for Comment service

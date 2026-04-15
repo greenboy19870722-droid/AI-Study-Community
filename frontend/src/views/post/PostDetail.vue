@@ -5,6 +5,7 @@ import { getPostDetail } from "@/api/post.js";
 import { getCommentTree, createComment, deleteComment } from "@/api/comment.js";
 import { getCurrentUserId, isLoggedIn } from "@/utils/auth.js";
 import { ElMessage, ElMessageBox } from "element-plus";
+import { deletePost } from "@/api/post";
 
 const route = useRoute();
 const router = useRouter();
@@ -216,7 +217,7 @@ const goToEdit = () => {
   router.push(`/post/edit/${post.value.id}`);
 };
 
-const deletePost = async () => {
+const deletePostInner = async () => {
   await deletePost(post.value.id);
   ElMessage.success("删除成功");
 
@@ -297,7 +298,7 @@ onMounted(() => {
         <div class="post-footer">
           <el-button type="primary" plain>
             <span class="btn-icon" v-if="!canDelete">♥ 点赞</span>
-            <span v-else @click="deletePost">删除</span>
+            <span v-else @click="deletePostInner">删除</span>
           </el-button>
           <el-button type="info" plain>分享</el-button>
         </div>

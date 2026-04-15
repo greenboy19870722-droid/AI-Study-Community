@@ -10,7 +10,7 @@ database:
   # 数据库用户名
   user: "root"
   # 数据库密码（留空）
-  pass: ""
+  pass: "E65fjcrM7sZnzWXr"
   # 字符集
   charset: "utf8mb4"
   # 时区设置

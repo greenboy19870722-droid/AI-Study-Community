@@ -1,17 +1,17 @@
 server:
-  address:     ":8000"
+  address: ":8000"
   openapiPath: "/api.json"
   swaggerPath: "/swagger"
 
 logger:
-  level : "all"
+  level: "all"
   stdout: true
 
 database:
   # 数据库类型：mysql
   type: "mysql"
   # Full DSN connection string
-  link: "root:@tcp(127.0.0.1:3306)/ai_study_community?charset=utf8mb4&loc=Local"
+  link: "root:E65fjcrM7sZnzWXr@tcp(127.0.0.1:3306)/ai_study_community?charset=utf8mb4&loc=Local"
   # 字符集
   charset: "utf8mb4"
   # 最大连接数

@@ -1,10 +1,10 @@
 server:
-  address:     ":8000"
+  address: ":8000"
   openapiPath: "/api.json"
   swaggerPath: "/swagger"
 
 logger:
-  level : "all"
+  level: "all"
   stdout: true
 
 database:
@@ -19,7 +19,7 @@ database:
   # 数据库用户名
   user: "root"
   # 数据库密码（留空）
-  pass: ""
+  pass: "E65fjcrM7sZnzWXr"
   # 字符集
   charset: "utf8mb4"
   # 时区设置
@@ -38,6 +38,3 @@ database:
   showExecTime: true
   # 自动创建表（开发环境关闭）
   autoCreate: false
-
-
-

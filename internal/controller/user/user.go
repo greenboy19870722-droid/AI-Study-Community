@@ -17,15 +17,17 @@ var (
 type cUser struct{}
 
 func (c *cUser) Create(ctx context.Context, req *do.UserReq) (res *do.UserResp, err error) {
+
+
 	result, err := service.UserService.Create(ctx, req)
 	if err != nil {
 		g.Log().Error(ctx, err)
 		return nil, err
 	}
 
-	r := ghttp.RequestFromCtx(ctx)
-
-	session := r.Session
+    r := ghttp.RequestFromCtx(ctx)
+    session := r.Session
+	session.Set("userId",result.Id)
 
 
 	return result, nil

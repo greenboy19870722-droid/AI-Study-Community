@@ -4,12 +4,16 @@
       "Bash(netstat -ano)",
       "Bash(findstr :8000)",
       "Bash(tasklist:*)",
-      "Bash(cp:*)",
-      "Bash(go build:*)",
-      "WebSearch",
-      "Read(//d D:/work/claw-ays/**)",
-      "Bash(go doc:*)",
-      "Bash(go list:*)"
+      "Bash(git push:*)",
+      "Bash(git config:*)",
+      "Bash(reg query:*)",
+      "Bash(reg add:*)",
+      "Bash(reg delete:*)",
+      "Bash(powershell:*)",
+      "Bash(go run:*)",
+      "Bash(npm run:*)",
+      "Bash(gf run:*)",
+      "Bash(GF_GORUN_BUILDFLAGS=\"-e\" gf run:*)"
     ]
   }
 }

@@ -69,7 +69,6 @@ import { useDark, useToggle } from "@vueuse/core";
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 import { getCurrentUser, getCurrentUserId } from "../utils/auth";
-
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
 const isLoggedIn = computed(() => !!getCurrentUserId());
